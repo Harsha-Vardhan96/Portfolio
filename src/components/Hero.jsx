@@ -602,7 +602,7 @@ export default function Hero({ onOpenCommandPalette }) {
 
             {/* LinkedIn */}
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/harsha-vardhan-menda-60bb37345"
               target="_blank"
               rel="noopener noreferrer"
               className="p-2 rounded-full hover:text-white hover:bg-white/[0.08] hover:scale-110 transition-all duration-300 cursor-pointer"

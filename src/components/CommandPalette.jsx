@@ -50,7 +50,7 @@ export default function CommandPalette({ isOpen, onClose }) {
       items: [
         { title: copied ? 'Email Copied!' : 'Copy Email Address', icon: Mail, action: copyEmail, badge: 'harsha21.menda@gmail.com' },
         { title: 'GitHub Profile', icon: GithubIcon, action: () => window.open('https://github.com/Harsha-Vardhan96', '_blank') },
-        { title: 'LinkedIn Profile', icon: LinkedinIcon, action: () => window.open('https://linkedin.com', '_blank') },
+        { title: 'LinkedIn Profile', icon: LinkedinIcon, action: () => window.open('https://www.linkedin.com/in/harsha-vardhan-menda-60bb37345', '_blank') },
       ]
     }
   ];

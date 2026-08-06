@@ -15,7 +15,7 @@ export default function Contact() {
 
   const socials = [
     { name: 'GitHub', url: 'https://github.com/Harsha-Vardhan96', icon: GithubIcon, handle: '@Harsha-Vardhan96' },
-    { name: 'LinkedIn', url: 'https://linkedin.com', icon: LinkedinIcon, handle: 'in/harsha-vardhan-menda' },
+    { name: 'LinkedIn', url: 'https://www.linkedin.com/in/harsha-vardhan-menda-60bb37345', icon: LinkedinIcon, handle: 'in/harsha-vardhan-menda' },
     { name: 'X / Twitter', url: 'https://x.com', icon: TwitterIcon, handle: '@harsha_menda' },
   ];
 
