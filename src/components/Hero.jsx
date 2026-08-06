@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Mail, 
@@ -24,11 +24,44 @@ import {
   Zap,
   Box
 } from 'lucide-react';
-import { GithubIcon, LinkedinIcon, TwitterIcon } from './Icons';
+import { GithubIcon, LinkedinIcon } from './Icons';
 
 export default function Hero({ onOpenCommandPalette }) {
   const [copiedEmail, setCopiedEmail] = useState(false);
   const emailAddress = 'harshavardhan.menda@gmail.com';
+
+  // Smooth Apple-style mouse parallax interpolation
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    let animationFrameId;
+    let targetX = 0;
+    let targetY = 0;
+    let currentX = 0;
+    let currentY = 0;
+
+    const handleMouseMove = (e) => {
+      const { innerWidth, innerHeight } = window;
+      targetX = (e.clientX / innerWidth - 0.5) * 2;
+      targetY = (e.clientY / innerHeight - 0.5) * 2;
+    };
+
+    const updateParallax = () => {
+      // Ultra-smooth lerp (linear interpolation) factor = 0.04 for zero jitter/lag
+      currentX += (targetX - currentX) * 0.04;
+      currentY += (targetY - currentY) * 0.04;
+      setMousePos({ x: currentX, y: currentY });
+      animationFrameId = requestAnimationFrame(updateParallax);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    animationFrameId = requestAnimationFrame(updateParallax);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, []);
 
   const copyEmail = () => {
     navigator.clipboard.writeText(emailAddress);
@@ -36,295 +69,157 @@ export default function Hero({ onOpenCommandPalette }) {
     setTimeout(() => setCopiedEmail(false), 2000);
   };
 
-  // 30 Handcrafted Cards representing Developer Expertise, Technologies, Projects & Stats
+  // 30 Handcrafted Cards with specific depth factors (closer cards move more, farther cards move less)
   const canvasCards = [
-    // 1. React (Tech Card)
+    // 1. React (Tech Card) - Depth 1.0 (Close)
     {
-      id: 1,
-      layout: 'tech',
-      title: 'React 19 Engine',
-      subtitle: 'Concurrent Runtimes & Server Actions',
-      icon: Sparkles,
-      tag: 'FRONTEND',
-      x: '3%', y: '6%', rotate: '-4deg', opacity: 0.35, duration: 28, delay: 0
+      id: 1, layout: 'tech', title: 'React 19 Engine', subtitle: 'Concurrent Runtimes & Server Actions', icon: Sparkles, tag: 'FRONTEND',
+      x: '3%', y: '6%', rotate: '-4deg', opacity: 0.38, depth: 1.1, duration: 28, delay: 0
     },
-    // 2. Spring Boot / Java (Code Snippet)
+    // 2. Spring Boot / Java (Code Snippet) - Depth 0.8
     {
-      id: 2,
-      layout: 'code',
-      filename: 'UserController.java',
-      code: '@RestController\n@RequestMapping("/api/v1")\npublic class UserEngine { ... }',
-      tag: 'SPRING BOOT',
-      x: '72%', y: '5%', rotate: '3deg', opacity: 0.4, duration: 32, delay: 1
+      id: 2, layout: 'code', filename: 'UserController.java', code: '@RestController\n@RequestMapping("/api/v1")\npublic class UserEngine { ... }', tag: 'SPRING BOOT',
+      x: '72%', y: '5%', rotate: '3deg', opacity: 0.4, depth: 0.8, duration: 32, delay: 1
     },
-    // 3. LeetCode / Problem Solving (Statistics)
+    // 3. LeetCode / Problem Solving (Statistics) - Depth 1.2 (Close)
     {
-      id: 3,
-      layout: 'stat',
-      statNumber: '650+',
-      statLabel: 'LeetCode Solved',
-      subtext: 'Top 0.5% Contest Rating (2180+)',
-      icon: Award,
-      x: '86%', y: '68%', rotate: '-3deg', opacity: 0.35, duration: 24, delay: 2
+      id: 3, layout: 'stat', statNumber: '650+', statLabel: 'LeetCode Solved', subtext: 'Top 0.5% Contest Rating (2180+)', icon: Award,
+      x: '86%', y: '68%', rotate: '-3deg', opacity: 0.38, depth: 1.2, duration: 24, delay: 2
     },
-    // 4. AI & Machine Learning (Mini Dashboard)
+    // 4. AI & Machine Learning (Mini Dashboard) - Depth 0.9
     {
-      id: 4,
-      layout: 'dashboard',
-      title: 'AI LLM Router',
-      metric: '98.6%',
-      metricLabel: 'Semantic Cache Hit',
-      graphData: [40, 65, 55, 80, 95, 98],
-      x: '5%', y: '80%', rotate: '4deg', opacity: 0.35, duration: 29, delay: 3
+      id: 4, layout: 'dashboard', title: 'AI LLM Router', metric: '98.6%', metricLabel: 'Semantic Cache Hit', graphData: [40, 65, 55, 80, 95, 98],
+      x: '5%', y: '80%', rotate: '4deg', opacity: 0.35, depth: 0.9, duration: 29, delay: 3
     },
-    // 5. AWS Cloud (Tech / Cert)
+    // 5. AWS Cloud (Cert) - Depth 0.5 (Farther)
     {
-      id: 5,
-      layout: 'cert',
-      title: 'AWS Certified',
-      subtitle: 'Solutions Architect Professional',
-      badge: 'CLOUD ARCHITECT',
-      icon: Cloud,
-      x: '88%', y: '36%', rotate: '-5deg', opacity: 0.4, duration: 26, delay: 0
+      id: 5, layout: 'cert', title: 'AWS Certified', subtitle: 'Solutions Architect Professional', badge: 'CLOUD ARCHITECT', icon: Cloud,
+      x: '88%', y: '36%', rotate: '-5deg', opacity: 0.4, depth: 0.5, duration: 26, delay: 0
     },
-    // 6. MongoDB (Database Query Code)
+    // 6. MongoDB (Code Query) - Depth 0.7
     {
-      id: 6,
-      layout: 'code',
-      filename: 'db.aggregation.js',
-      code: 'db.events.aggregate([\n  { $match: { status: "ACTIVE" } },\n  { $group: { _id: "$region", count: { $sum: 1 } } }\n])',
-      tag: 'MONGODB',
-      x: '2%', y: '46%', rotate: '4deg', opacity: 0.35, duration: 33, delay: 4
+      id: 6, layout: 'code', filename: 'db.aggregation.js', code: 'db.events.aggregate([\n  { $match: { status: "ACTIVE" } },\n  { $group: { _id: "$region", count: { $sum: 1 } } }\n])', tag: 'MONGODB',
+      x: '2%', y: '46%', rotate: '4deg', opacity: 0.35, depth: 0.7, duration: 33, delay: 4
     },
-    // 7. Node.js (Tech Card)
+    // 7. Node.js (Tech Card) - Depth 1.0
     {
-      id: 7,
-      layout: 'tech',
-      title: 'Node.js & Express',
-      subtitle: 'Event Loop & Non-Blocking I/O',
-      icon: Server,
-      tag: 'BACKEND',
-      x: '18%', y: '14%', rotate: '-2deg', opacity: 0.35, duration: 27, delay: 1
+      id: 7, layout: 'tech', title: 'Node.js & Express', subtitle: 'Event Loop & Non-Blocking I/O', icon: Server, tag: 'BACKEND',
+      x: '18%', y: '14%', rotate: '-2deg', opacity: 0.38, depth: 1.0, duration: 27, delay: 1
     },
-    // 8. Projects: Hyperion Engine (Project Preview Card)
+    // 8. Projects: Hyperion Engine (Project Preview Card) - Depth 0.6
     {
-      id: 8,
-      layout: 'project',
-      projectName: 'Hyperion Engine',
-      tagline: '10M+ RPS Real-time Telemetry Stream',
-      status: 'PRODUCTION LIVE',
-      x: '68%', y: '85%', rotate: '2deg', opacity: 0.35, duration: 30, delay: 2
+      id: 8, layout: 'project', projectName: 'Hyperion Engine', tagline: '10M+ RPS Real-time Telemetry Stream', status: 'PRODUCTION LIVE',
+      x: '68%', y: '85%', rotate: '2deg', opacity: 0.35, depth: 0.6, duration: 30, delay: 2
     },
-    // 9. GitHub Activity (Stat / Graph Card)
+    // 9. GitHub Activity (Graph Card) - Depth 0.9
     {
-      id: 9,
-      layout: 'graph',
-      title: 'GitHub Contributions',
-      value: '1,420 Commits',
-      subtitle: 'Active Streak: 148 Days',
-      graphBars: [6, 12, 18, 14, 22, 28, 24, 30, 26, 32],
-      x: '28%', y: '5%', rotate: '-5deg', opacity: 0.35, duration: 31, delay: 3
+      id: 9, layout: 'graph', title: 'GitHub Contributions', value: '1,420 Commits', subtitle: 'Active Streak: 148 Days', graphBars: [6, 12, 18, 14, 22, 28, 24, 30, 26, 32],
+      x: '28%', y: '5%', rotate: '-5deg', opacity: 0.35, depth: 0.9, duration: 31, delay: 3
     },
-    // 10. Clean Code & Refactoring (Code Snippet)
+    // 10. Clean Code (Code Snippet) - Depth 1.2 (Close)
     {
-      id: 10,
-      layout: 'code',
-      filename: 'clean_arch.ts',
-      code: 'type Result<T, E> = \n  | { ok: true; value: T }\n  | { ok: false; error: E };',
-      tag: 'CLEAN CODE',
-      x: '60%', y: '15%', rotate: '4deg', opacity: 0.4, duration: 25, delay: 0
+      id: 10, layout: 'code', filename: 'clean_arch.ts', code: 'type Result<T, E> = \n  | { ok: true; value: T }\n  | { ok: false; error: E };', tag: 'CLEAN CODE',
+      x: '60%', y: '15%', rotate: '4deg', opacity: 0.42, depth: 1.2, duration: 25, delay: 0
     },
-    // 11. UI/UX Design (UI Spec Card)
+    // 11. UI/UX Design (UI Spec Card) - Depth 0.4 (Farther)
     {
-      id: 11,
-      layout: 'uispec',
-      title: 'Glassmorphism Design System',
-      tokens: ['#070709', 'blur(24px)', 'border-1px'],
-      icon: Layout,
-      x: '24%', y: '88%', rotate: '-4deg', opacity: 0.3, duration: 34, delay: 5
+      id: 11, layout: 'uispec', title: 'Glassmorphism Design System', tokens: ['#070709', 'blur(24px)', 'border-1px'], icon: Layout,
+      x: '24%', y: '88%', rotate: '-4deg', opacity: 0.3, depth: 0.4, duration: 34, delay: 5
     },
-    // 12. Java Core (Tech Card)
+    // 12. Java Core (Tech Card) - Depth 0.8
     {
-      id: 12,
-      layout: 'tech',
-      title: 'Java 21 Virtual Threads',
-      subtitle: 'Project Loom & High Concurrency',
-      icon: Code2,
-      tag: 'CORE JAVA',
-      x: '46%', y: '90%', rotate: '3deg', opacity: 0.35, duration: 28, delay: 2
+      id: 12, layout: 'tech', title: 'Java 21 Virtual Threads', subtitle: 'Project Loom & High Concurrency', icon: Code2, tag: 'CORE JAVA',
+      x: '46%', y: '90%', rotate: '3deg', opacity: 0.35, depth: 0.8, duration: 28, delay: 2
     },
-    // 13. Experience Timeline (Timeline Card)
+    // 13. Experience Timeline - Depth 0.5 (Farther)
     {
-      id: 13,
-      layout: 'timeline',
-      period: '2023 — PRESENT',
-      role: 'Staff Software Engineer',
-      company: 'CoreScale Systems',
-      x: '48%', y: '3%', rotate: '-2deg', opacity: 0.35, duration: 29, delay: 1
+      id: 13, layout: 'timeline', period: '2023 — PRESENT', role: 'Staff Software Engineer', company: 'CoreScale Systems',
+      x: '48%', y: '3%', rotate: '-2deg', opacity: 0.35, depth: 0.5, duration: 29, delay: 1
     },
-    // 14. PostgreSQL (Database Stat Card)
+    // 14. PostgreSQL (Database Stat) - Depth 1.1 (Close)
     {
-      id: 14,
-      layout: 'stat',
-      statNumber: '99.999%',
-      statLabel: 'Database Availability',
-      subtext: 'Multi-region replication & WAL streaming',
-      icon: Database,
-      x: '8%', y: '64%', rotate: '5deg', opacity: 0.4, duration: 26, delay: 4
+      id: 14, layout: 'stat', statNumber: '99.999%', statLabel: 'Database Availability', subtext: 'Multi-region replication & WAL streaming', icon: Database,
+      x: '8%', y: '64%', rotate: '5deg', opacity: 0.4, depth: 1.1, duration: 26, delay: 4
     },
-    // 15. Docker & Kubernetes (Tech Badge)
+    // 15. Docker & Kubernetes (Tech Badge) - Depth 0.6
     {
-      id: 15,
-      layout: 'tech',
-      title: 'Docker & Kubernetes',
-      subtitle: 'Helm Charts & Microservice Orchestration',
-      icon: Box,
-      tag: 'DEVOPS',
-      x: '82%', y: '50%', rotate: '-3deg', opacity: 0.3, duration: 27, delay: 2
+      id: 15, layout: 'tech', title: 'Docker & Kubernetes', subtitle: 'Helm Charts & Microservice Orchestration', icon: Box, tag: 'DEVOPS',
+      x: '82%', y: '50%', rotate: '-3deg', opacity: 0.3, depth: 0.6, duration: 27, delay: 2
     },
-    // 16. System Health (Mini Dashboard)
+    // 16. System Health (Dashboard) - Depth 0.9
     {
-      id: 16,
-      layout: 'dashboard',
-      title: 'Global Edge Latency',
-      metric: '11.8ms',
-      metricLabel: 'p99 SLA Target',
-      graphData: [25, 22, 18, 15, 12, 11],
-      x: '86%', y: '18%', rotate: '4deg', opacity: 0.35, duration: 23, delay: 0
+      id: 16, layout: 'dashboard', title: 'Global Edge Latency', metric: '11.8ms', metricLabel: 'p99 SLA Target', graphData: [25, 22, 18, 15, 12, 11],
+      x: '86%', y: '18%', rotate: '4deg', opacity: 0.35, depth: 0.9, duration: 23, delay: 0
     },
-    // 17. Problem Solving (Tech Card)
+    // 17. Problem Solving (Tech Card) - Depth 0.4 (Farther)
     {
-      id: 17,
-      layout: 'tech',
-      title: 'Data Structures & Alg.',
-      subtitle: 'Dynamic Programming & Graph Theory',
-      icon: Brain,
-      tag: 'PROBLEM SOLVING',
-      x: '2%', y: '30%', rotate: '-5deg', opacity: 0.3, duration: 30, delay: 3
+      id: 17, layout: 'tech', title: 'Data Structures & Alg.', subtitle: 'Dynamic Programming & Graph Theory', icon: Brain, tag: 'PROBLEM SOLVING',
+      x: '2%', y: '30%', rotate: '-5deg', opacity: 0.3, depth: 0.4, duration: 30, delay: 3
     },
-    // 18. Rust Systems (Code Snippet)
+    // 18. Rust Systems (Code Snippet) - Depth 1.2 (Close)
     {
-      id: 18,
-      layout: 'code',
-      filename: 'ring_buffer.rs',
-      code: 'pub fn lock_free_push(&self, item: T) {\n  let tail = self.tail.fetch_add(1);\n  self.slots[tail % N].write(item);\n}',
-      tag: 'RUST ENGINE',
-      x: '75%', y: '28%', rotate: '2deg', opacity: 0.4, duration: 25, delay: 1
+      id: 18, layout: 'code', filename: 'ring_buffer.rs', code: 'pub fn lock_free_push(&self, item: T) {\n  let tail = self.tail.fetch_add(1);\n  self.slots[tail % N].write(item);\n}', tag: 'RUST ENGINE',
+      x: '75%', y: '28%', rotate: '2deg', opacity: 0.42, depth: 1.2, duration: 25, delay: 1
     },
-    // 19. Location (Badge)
+    // 19. Location (Timeline) - Depth 0.3 (Farther)
     {
-      id: 19,
-      layout: 'timeline',
-      period: 'LOCATION',
-      role: 'San Francisco, CA',
-      company: 'Open for Remote / Hybrid',
-      x: '14%', y: '36%', rotate: '-2deg', opacity: 0.25, duration: 32, delay: 4
+      id: 19, layout: 'timeline', period: 'LOCATION', role: 'San Francisco, CA', company: 'Open for Remote / Hybrid',
+      x: '14%', y: '36%', rotate: '-2deg', opacity: 0.25, depth: 0.3, duration: 32, delay: 4
     },
-    // 20. Microservices Architecture (Stat)
+    // 20. Microservices Architecture (Stat) - Depth 0.8
     {
-      id: 20,
-      layout: 'stat',
-      statNumber: '128',
-      statLabel: 'Microservice Shards',
-      subtext: 'Zero downtime rolling deployments',
-      icon: Layers,
-      x: '84%', y: '84%', rotate: '6deg', opacity: 0.35, duration: 28, delay: 2
+      id: 20, layout: 'stat', statNumber: '128', statLabel: 'Microservice Shards', subtext: 'Zero downtime rolling deployments', icon: Layers,
+      x: '84%', y: '84%', rotate: '6deg', opacity: 0.35, depth: 0.8, duration: 28, delay: 2
     },
-    // 21. Machine Learning (Tech Card)
+    // 21. Machine Learning (Tech Card) - Depth 0.7
     {
-      id: 21,
-      layout: 'tech',
-      title: 'PyTorch & Vector DB',
-      subtitle: 'Embeddings & HNSW Vector Index',
-      icon: Brain,
-      tag: 'MACHINE LEARNING',
-      x: '38%', y: '86%', rotate: '-4deg', opacity: 0.3, duration: 27, delay: 0
+      id: 21, layout: 'tech', title: 'PyTorch & Vector DB', subtitle: 'Embeddings & HNSW Vector Index', icon: Brain, tag: 'MACHINE LEARNING',
+      x: '38%', y: '86%', rotate: '-4deg', opacity: 0.3, depth: 0.7, duration: 27, delay: 0
     },
-    // 22. Security & mTLS (Code Snippet)
+    // 22. Security & mTLS (Code Snippet) - Depth 1.0
     {
-      id: 22,
-      layout: 'code',
-      filename: 'mtls_config.go',
-      code: 'tlsConfig := &tls.Config{\n  ClientAuth: tls.RequireAndVerifyClientCert,\n  MinVersion: tls.VersionTLS13,\n}',
-      tag: 'SECURITY',
-      x: '60%', y: '78%', rotate: '3deg', opacity: 0.35, duration: 31, delay: 3
+      id: 22, layout: 'code', filename: 'mtls_config.go', code: 'tlsConfig := &tls.Config{\n  ClientAuth: tls.RequireAndVerifyClientCert,\n  MinVersion: tls.VersionTLS13,\n}', tag: 'SECURITY',
+      x: '60%', y: '78%', rotate: '3deg', opacity: 0.35, depth: 1.0, duration: 31, delay: 3
     },
-    // 23. Experience: Senior Engineer (Timeline)
+    // 23. Experience: Senior Engineer (Timeline) - Depth 0.5
     {
-      id: 23,
-      layout: 'timeline',
-      period: '2021 — 2023',
-      role: 'Senior Systems Engineer',
-      company: 'Veloce Data Platforms',
-      x: '68%', y: '48%', rotate: '-3deg', opacity: 0.3, duration: 24, delay: 1
+      id: 23, layout: 'timeline', period: '2021 — 2023', role: 'Senior Systems Engineer', company: 'Veloce Data Platforms',
+      x: '68%', y: '48%', rotate: '-3deg', opacity: 0.3, depth: 0.5, duration: 24, delay: 1
     },
-    // 24. Code Coverage (Stat Card)
+    // 24. Code Coverage (Stat Card) - Depth 1.1 (Close)
     {
-      id: 24,
-      layout: 'stat',
-      statNumber: '99.4%',
-      statLabel: 'Test Suite Coverage',
-      subtext: 'Unit, Integration & E2E Verification',
-      icon: CheckCircle2,
-      x: '16%', y: '74%', rotate: '4deg', opacity: 0.4, duration: 26, delay: 5
+      id: 24, layout: 'stat', statNumber: '99.4%', statLabel: 'Test Suite Coverage', subtext: 'Unit, Integration & E2E Verification', icon: CheckCircle2,
+      x: '16%', y: '74%', rotate: '4deg', opacity: 0.4, depth: 1.1, duration: 26, delay: 5
     },
-    // 25. Projects: Apex AI Proxy (Project Preview)
+    // 25. Projects: Apex AI Proxy (Project Card) - Depth 0.7
     {
-      id: 25,
-      layout: 'project',
-      projectName: 'Apex AI Proxy',
-      tagline: 'Semantic Prompt Cache Gateway',
-      status: 'OPEN SOURCE',
-      x: '76%', y: '62%', rotate: '-5deg', opacity: 0.35, duration: 29, delay: 2
+      id: 25, layout: 'project', projectName: 'Apex AI Proxy', tagline: 'Semantic Prompt Cache Gateway', status: 'OPEN SOURCE',
+      x: '76%', y: '62%', rotate: '-5deg', opacity: 0.35, depth: 0.7, duration: 29, delay: 2
     },
-    // 26. REST API Design (Tech Card)
+    // 26. REST API Design (Tech Card) - Depth 0.6
     {
-      id: 26,
-      layout: 'tech',
-      title: 'gRPC & REST APIs',
-      subtitle: 'Protobuf Schemas & OpenAPI 3.0',
-      icon: Server,
-      tag: 'API DESIGN',
-      x: '35%', y: '12%', rotate: '2deg', opacity: 0.3, duration: 33, delay: 4
+      id: 26, layout: 'tech', title: 'gRPC & REST APIs', subtitle: 'Protobuf Schemas & OpenAPI 3.0', icon: Server, tag: 'API DESIGN',
+      x: '35%', y: '12%', rotate: '2deg', opacity: 0.3, depth: 0.6, duration: 33, delay: 4
     },
-    // 27. Frontend Performance (Stat Card)
+    // 27. Frontend Performance (Stat Card) - Depth 1.0
     {
-      id: 27,
-      layout: 'stat',
-      statNumber: '100 / 100',
-      statLabel: 'Lighthouse Performance',
-      subtext: 'Zero Layout Shift & Fast Paint',
-      icon: Zap,
-      x: '8%', y: '22%', rotate: '-4deg', opacity: 0.35, duration: 25, delay: 0
+      id: 27, layout: 'stat', statNumber: '100 / 100', statLabel: 'Lighthouse Performance', subtext: 'Zero Layout Shift & Fast Paint', icon: Zap,
+      x: '8%', y: '22%', rotate: '-4deg', opacity: 0.35, depth: 1.0, duration: 25, delay: 0
     },
-    // 28. CKA Certification (Cert Card)
+    // 28. CKA Certification (Cert Card) - Depth 0.8
     {
-      id: 28,
-      layout: 'cert',
-      title: 'CKA Certified',
-      subtitle: 'Kubernetes Administrator',
-      badge: 'CERTIFICATION',
-      icon: ShieldCheck,
-      x: '78%', y: '92%', rotate: '5deg', opacity: 0.4, duration: 22, delay: 3
+      id: 28, layout: 'cert', title: 'CKA Certified', subtitle: 'Kubernetes Administrator', badge: 'CERTIFICATION', icon: ShieldCheck,
+      x: '78%', y: '92%', rotate: '5deg', opacity: 0.4, depth: 0.8, duration: 22, delay: 3
     },
-    // 29. Git Workflow (Tech Card)
+    // 29. Git Workflow (Tech Card) - Depth 0.4 (Farther)
     {
-      id: 29,
-      layout: 'tech',
-      title: 'Trunk-Based Dev',
-      subtitle: 'Automated CI/CD & Feature Flags',
-      icon: GitBranch,
-      tag: 'DEVOPS',
-      x: '3%', y: '92%', rotate: '-2deg', opacity: 0.3, duration: 30, delay: 1
+      id: 29, layout: 'tech', title: 'Trunk-Based Dev', subtitle: 'Automated CI/CD & Feature Flags', icon: GitBranch, tag: 'DEVOPS',
+      x: '3%', y: '92%', rotate: '-2deg', opacity: 0.3, depth: 0.4, duration: 30, delay: 1
     },
-    // 30. Projects: Synapse UI (Project Card)
+    // 30. Projects: Synapse UI (Project Card) - Depth 0.9
     {
-      id: 30,
-      layout: 'project',
-      projectName: 'Synapse UI System',
-      tagline: 'Zero-runtime Component Toolkit',
-      status: 'v2.4 READY',
-      x: '58%', y: '92%', rotate: '2deg', opacity: 0.35, duration: 31, delay: 5
+      id: 30, layout: 'project', projectName: 'Synapse UI System', tagline: 'Zero-runtime Component Toolkit', status: 'v2.4 READY',
+      x: '58%', y: '92%', rotate: '2deg', opacity: 0.35, depth: 0.9, duration: 31, delay: 5
     }
   ];
 
@@ -485,6 +380,10 @@ export default function Hero({ onOpenCommandPalette }) {
     }
   };
 
+  // Parallax offsets for center card (max 2.2px)
+  const centerParallaxX = mousePos.x * 2.2;
+  const centerParallaxY = mousePos.y * 2.2;
+
   return (
     <section 
       id="hero" 
@@ -497,32 +396,39 @@ export default function Hero({ onOpenCommandPalette }) {
         {/* Soft Center Backlight */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-white/[0.025] blur-[170px]" />
 
-        {/* Scattered Handcrafted Cards (30 items) */}
-        {canvasCards.map((card) => (
-          <motion.div
-            key={card.id}
-            initial={{ x: 0, y: 0 }}
-            animate={{
-              x: [0, (card.id % 2 === 0 ? 18 : -18), 0],
-              y: [0, (card.id % 3 === 0 ? -24 : 24), 0],
-            }}
-            transition={{
-              duration: card.duration,
-              repeat: Infinity,
-              ease: 'easeInOut',
-              delay: card.delay,
-            }}
-            style={{
-              left: card.x,
-              top: card.y,
-              transform: `rotate(${card.rotate})`,
-              opacity: card.opacity,
-            }}
-            className="absolute hidden md:block transition-opacity duration-500 hover:opacity-95"
-          >
-            {renderCardContent(card)}
-          </motion.div>
-        ))}
+        {/* Scattered Handcrafted Cards (30 items) with Depth-Based Parallax */}
+        {canvasCards.map((card) => {
+          // Calculate parallax offset based on depth (closer cards move more, max 14px)
+          const parallaxX = mousePos.x * (card.depth || 0.7) * 14;
+          const parallaxY = mousePos.y * (card.depth || 0.7) * 14;
+
+          const baseFloatX = card.id % 2 === 0 ? 16 : -16;
+          const baseFloatY = card.id % 3 === 0 ? -22 : 22;
+
+          return (
+            <motion.div
+              key={card.id}
+              initial={{ x: 0, y: 0 }}
+              animate={{
+                x: [baseFloatX + parallaxX, -baseFloatX + parallaxX, baseFloatX + parallaxX],
+                y: [baseFloatY + parallaxY, -baseFloatY + parallaxY, baseFloatY + parallaxY],
+              }}
+              transition={{
+                x: { duration: card.duration, repeat: Infinity, ease: 'easeInOut', delay: card.delay },
+                y: { duration: card.duration, repeat: Infinity, ease: 'easeInOut', delay: card.delay },
+              }}
+              style={{
+                left: card.x,
+                top: card.y,
+                transform: `rotate(${card.rotate})`,
+                opacity: card.opacity,
+              }}
+              className="absolute hidden md:block transition-opacity duration-500 hover:opacity-95"
+            >
+              {renderCardContent(card)}
+            </motion.div>
+          );
+        })}
 
         {/* Subtle Grid Overlay */}
         <div className="absolute inset-0 bg-grid-pattern opacity-20" />
@@ -537,7 +443,8 @@ export default function Hero({ onOpenCommandPalette }) {
           animate={{ 
             opacity: 1, 
             scale: 1,
-            y: [0, -6, 0],
+            x: centerParallaxX,
+            y: [centerParallaxY, centerParallaxY - 6, centerParallaxY],
             borderColor: [
               'rgba(255, 255, 255, 0.08)',
               'rgba(255, 255, 255, 0.16)',
