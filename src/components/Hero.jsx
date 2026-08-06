@@ -1,7 +1,30 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, FileText, Check, ArrowUpRight, Cpu, Terminal, ShieldCheck, Sparkles, Code2, Database, Layers } from 'lucide-react';
-import { GithubIcon, LinkedinIcon } from './Icons';
+import { 
+  Mail, 
+  FileText, 
+  Check, 
+  ArrowUpRight, 
+  Cpu, 
+  Terminal, 
+  ShieldCheck, 
+  Sparkles, 
+  Code2, 
+  Database, 
+  Layers,
+  Activity,
+  Award,
+  BarChart2,
+  Brain,
+  CheckCircle2,
+  Cloud,
+  GitBranch,
+  Layout,
+  Server,
+  Zap,
+  Box
+} from 'lucide-react';
+import { GithubIcon, LinkedinIcon, TwitterIcon } from './Icons';
 
 export default function Hero({ onOpenCommandPalette }) {
   const [copiedEmail, setCopiedEmail] = useState(false);
@@ -13,41 +36,454 @@ export default function Hero({ onOpenCommandPalette }) {
     setTimeout(() => setCopiedEmail(false), 2000);
   };
 
-  // 32 Distinct, naturally scattered floating cards for Layer 1 (Endless Creative Canvas)
-  const floatingCards = [
-    { id: 1, type: 'badge', text: '10M+ RPS Edge Cluster', icon: Cpu, x: '4%', y: '8%', rotate: '-4deg', size: 'normal', opacity: 0.35, duration: 26, delay: 0 },
-    { id: 2, type: 'code', text: 'fn lock_free_push(&self) -> Ok(())', x: '72%', y: '6%', rotate: '3deg', size: 'code', opacity: 0.4, duration: 30, delay: 1 },
-    { id: 3, type: 'badge', text: '99.999% SLA Uptime', icon: ShieldCheck, x: '85%', y: '68%', rotate: '-2deg', size: 'pill', opacity: 0.3, duration: 22, delay: 2 },
-    { id: 4, type: 'metric', text: 'p99 LATENCY < 12.4ms', x: '5%', y: '82%', rotate: '5deg', size: 'large', opacity: 0.35, duration: 28, delay: 3 },
-    { id: 5, type: 'badge', text: 'Zero-Copy Ring Buffer', icon: Code2, x: '88%', y: '36%', rotate: '-5deg', size: 'normal', opacity: 0.4, duration: 25, delay: 0 },
-    { id: 6, type: 'code', text: 'const SIMD_STRIDE = 64;', x: '3%', y: '48%', rotate: '4deg', size: 'code', opacity: 0.3, duration: 32, delay: 4 },
-    { id: 7, type: 'badge', text: 'AVX-512 SIMD Assembly', icon: Cpu, x: '18%', y: '16%', rotate: '-3deg', size: 'normal', opacity: 0.35, duration: 27, delay: 1 },
-    { id: 8, type: 'badge', text: 'Apache Arrow Flight', icon: Layers, x: '68%', y: '86%', rotate: '2deg', size: 'pill', opacity: 0.3, duration: 29, delay: 2 },
-    { id: 9, type: 'badge', text: 'OpenTelemetry Pipeline', icon: Terminal, x: '28%', y: '6%', rotate: '-6deg', size: 'normal', opacity: 0.35, duration: 31, delay: 3 },
-    { id: 10, type: 'metric', text: 'QUORUM: 5 / 5 NODES', x: '62%', y: '16%', rotate: '4deg', size: 'metric', opacity: 0.4, duration: 24, delay: 0 },
-    { id: 11, type: 'badge', text: 'eBPF Kernel Probe', icon: ShieldCheck, x: '24%', y: '88%', rotate: '-4deg', size: 'pill', opacity: 0.3, duration: 33, delay: 5 },
-    { id: 12, type: 'badge', text: 'React 19 & Tailwind v4', icon: Sparkles, x: '46%', y: '90%', rotate: '3deg', size: 'normal', opacity: 0.35, duration: 28, delay: 2 },
-    { id: 13, type: 'code', text: 'SELECT * FROM telemetry_stream;', x: '48%', y: '4%', rotate: '-2deg', size: 'code', opacity: 0.35, duration: 29, delay: 1 },
-    { id: 14, type: 'badge', text: 'PostgreSQL Spanner', icon: Database, x: '8%', y: '64%', rotate: '6deg', size: 'normal', opacity: 0.4, duration: 26, delay: 4 },
-    { id: 15, type: 'badge', text: 'Wasm Edge Sandbox', icon: Code2, x: '82%', y: '52%', rotate: '-3deg', size: 'pill', opacity: 0.3, duration: 27, delay: 2 },
-    { id: 16, type: 'metric', text: 'MEM: 14.2 MB / NODE', x: '86%', y: '20%', rotate: '5deg', size: 'metric', opacity: 0.35, duration: 23, delay: 0 },
-    { id: 17, type: 'badge', text: 'Raft Consensus Protocol', icon: Database, x: '2%', y: '32%', rotate: '-5deg', size: 'large', opacity: 0.3, duration: 30, delay: 3 },
-    { id: 18, type: 'code', text: 'cacheHitRate: 98.4%', x: '75%', y: '30%', rotate: '2deg', size: 'code', opacity: 0.4, duration: 25, delay: 1 },
-    { id: 19, type: 'badge', text: 'San Francisco, CA', icon: Terminal, x: '14%', y: '38%', rotate: '-2deg', size: 'pill', opacity: 0.25, duration: 32, delay: 4 },
-    { id: 20, type: 'metric', text: 'ZERO GC PAUSES', x: '84%', y: '84%', rotate: '6deg', size: 'metric', opacity: 0.35, duration: 28, delay: 2 },
-    { id: 21, type: 'badge', text: 'Vector Search HNSW', icon: Sparkles, x: '38%', y: '86%', rotate: '-4deg', size: 'normal', opacity: 0.3, duration: 27, delay: 0 },
-    { id: 22, type: 'code', text: 'mTLS 1.3 Strict Auth', x: '60%', y: '78%', rotate: '3deg', size: 'code', opacity: 0.35, duration: 31, delay: 3 },
-    { id: 23, type: 'badge', text: 'Rust Async Tokio', icon: Terminal, x: '68%', y: '48%', rotate: '-3deg', size: 'pill', opacity: 0.3, duration: 24, delay: 1 },
-    { id: 24, type: 'metric', text: 'SHARD COUNT: 128', x: '16%', y: '76%', rotate: '4deg', size: 'metric', opacity: 0.4, duration: 26, delay: 5 },
-    { id: 25, type: 'badge', text: 'gRPC Micro-Proxy', icon: Database, x: '76%', y: '64%', rotate: '-5deg', size: 'normal', opacity: 0.35, duration: 29, delay: 2 },
-    { id: 26, type: 'code', text: 'AST COMPILER: PASSING', x: '35%', y: '14%', rotate: '2deg', size: 'code', opacity: 0.3, duration: 33, delay: 4 },
-    { id: 27, type: 'badge', text: 'Sub-5KB Core Bundle', icon: Sparkles, x: '8%', y: '24%', rotate: '-4deg', size: 'pill', opacity: 0.35, duration: 25, delay: 0 },
-    { id: 28, type: 'metric', text: 'STATUS: OPERATIONAL', x: '78%', y: '92%', rotate: '5deg', size: 'metric', opacity: 0.4, duration: 22, delay: 3 },
-    { id: 29, type: 'badge', text: 'Prometheus Exporters', icon: Terminal, x: '3%', y: '92%', rotate: '-2deg', size: 'normal', opacity: 0.3, duration: 30, delay: 1 },
-    { id: 30, type: 'code', text: 'atomic::Ordering::SeqCst', x: '88%', y: '8%', rotate: '4deg', size: 'code', opacity: 0.35, duration: 27, delay: 2 },
-    { id: 31, type: 'badge', text: 'Kafka Event Streams', icon: Database, x: '66%', y: '6%', rotate: '-3deg', size: 'normal', opacity: 0.3, duration: 28, delay: 4 },
-    { id: 32, type: 'metric', text: 'WCAG 2.1 AAA', x: '58%', y: '92%', rotate: '2deg', size: 'pill', opacity: 0.35, duration: 31, delay: 5 },
+  // 30 Handcrafted Cards representing Developer Expertise, Technologies, Projects & Stats
+  const canvasCards = [
+    // 1. React (Tech Card)
+    {
+      id: 1,
+      layout: 'tech',
+      title: 'React 19 Engine',
+      subtitle: 'Concurrent Runtimes & Server Actions',
+      icon: Sparkles,
+      tag: 'FRONTEND',
+      x: '3%', y: '6%', rotate: '-4deg', opacity: 0.35, duration: 28, delay: 0
+    },
+    // 2. Spring Boot / Java (Code Snippet)
+    {
+      id: 2,
+      layout: 'code',
+      filename: 'UserController.java',
+      code: '@RestController\n@RequestMapping("/api/v1")\npublic class UserEngine { ... }',
+      tag: 'SPRING BOOT',
+      x: '72%', y: '5%', rotate: '3deg', opacity: 0.4, duration: 32, delay: 1
+    },
+    // 3. LeetCode / Problem Solving (Statistics)
+    {
+      id: 3,
+      layout: 'stat',
+      statNumber: '650+',
+      statLabel: 'LeetCode Solved',
+      subtext: 'Top 0.5% Contest Rating (2180+)',
+      icon: Award,
+      x: '86%', y: '68%', rotate: '-3deg', opacity: 0.35, duration: 24, delay: 2
+    },
+    // 4. AI & Machine Learning (Mini Dashboard)
+    {
+      id: 4,
+      layout: 'dashboard',
+      title: 'AI LLM Router',
+      metric: '98.6%',
+      metricLabel: 'Semantic Cache Hit',
+      graphData: [40, 65, 55, 80, 95, 98],
+      x: '5%', y: '80%', rotate: '4deg', opacity: 0.35, duration: 29, delay: 3
+    },
+    // 5. AWS Cloud (Tech / Cert)
+    {
+      id: 5,
+      layout: 'cert',
+      title: 'AWS Certified',
+      subtitle: 'Solutions Architect Professional',
+      badge: 'CLOUD ARCHITECT',
+      icon: Cloud,
+      x: '88%', y: '36%', rotate: '-5deg', opacity: 0.4, duration: 26, delay: 0
+    },
+    // 6. MongoDB (Database Query Code)
+    {
+      id: 6,
+      layout: 'code',
+      filename: 'db.aggregation.js',
+      code: 'db.events.aggregate([\n  { $match: { status: "ACTIVE" } },\n  { $group: { _id: "$region", count: { $sum: 1 } } }\n])',
+      tag: 'MONGODB',
+      x: '2%', y: '46%', rotate: '4deg', opacity: 0.35, duration: 33, delay: 4
+    },
+    // 7. Node.js (Tech Card)
+    {
+      id: 7,
+      layout: 'tech',
+      title: 'Node.js & Express',
+      subtitle: 'Event Loop & Non-Blocking I/O',
+      icon: Server,
+      tag: 'BACKEND',
+      x: '18%', y: '14%', rotate: '-2deg', opacity: 0.35, duration: 27, delay: 1
+    },
+    // 8. Projects: Hyperion Engine (Project Preview Card)
+    {
+      id: 8,
+      layout: 'project',
+      projectName: 'Hyperion Engine',
+      tagline: '10M+ RPS Real-time Telemetry Stream',
+      status: 'PRODUCTION LIVE',
+      x: '68%', y: '85%', rotate: '2deg', opacity: 0.35, duration: 30, delay: 2
+    },
+    // 9. GitHub Activity (Stat / Graph Card)
+    {
+      id: 9,
+      layout: 'graph',
+      title: 'GitHub Contributions',
+      value: '1,420 Commits',
+      subtitle: 'Active Streak: 148 Days',
+      graphBars: [6, 12, 18, 14, 22, 28, 24, 30, 26, 32],
+      x: '28%', y: '5%', rotate: '-5deg', opacity: 0.35, duration: 31, delay: 3
+    },
+    // 10. Clean Code & Refactoring (Code Snippet)
+    {
+      id: 10,
+      layout: 'code',
+      filename: 'clean_arch.ts',
+      code: 'type Result<T, E> = \n  | { ok: true; value: T }\n  | { ok: false; error: E };',
+      tag: 'CLEAN CODE',
+      x: '60%', y: '15%', rotate: '4deg', opacity: 0.4, duration: 25, delay: 0
+    },
+    // 11. UI/UX Design (UI Spec Card)
+    {
+      id: 11,
+      layout: 'uispec',
+      title: 'Glassmorphism Design System',
+      tokens: ['#070709', 'blur(24px)', 'border-1px'],
+      icon: Layout,
+      x: '24%', y: '88%', rotate: '-4deg', opacity: 0.3, duration: 34, delay: 5
+    },
+    // 12. Java Core (Tech Card)
+    {
+      id: 12,
+      layout: 'tech',
+      title: 'Java 21 Virtual Threads',
+      subtitle: 'Project Loom & High Concurrency',
+      icon: Code2,
+      tag: 'CORE JAVA',
+      x: '46%', y: '90%', rotate: '3deg', opacity: 0.35, duration: 28, delay: 2
+    },
+    // 13. Experience Timeline (Timeline Card)
+    {
+      id: 13,
+      layout: 'timeline',
+      period: '2023 — PRESENT',
+      role: 'Staff Software Engineer',
+      company: 'CoreScale Systems',
+      x: '48%', y: '3%', rotate: '-2deg', opacity: 0.35, duration: 29, delay: 1
+    },
+    // 14. PostgreSQL (Database Stat Card)
+    {
+      id: 14,
+      layout: 'stat',
+      statNumber: '99.999%',
+      statLabel: 'Database Availability',
+      subtext: 'Multi-region replication & WAL streaming',
+      icon: Database,
+      x: '8%', y: '64%', rotate: '5deg', opacity: 0.4, duration: 26, delay: 4
+    },
+    // 15. Docker & Kubernetes (Tech Badge)
+    {
+      id: 15,
+      layout: 'tech',
+      title: 'Docker & Kubernetes',
+      subtitle: 'Helm Charts & Microservice Orchestration',
+      icon: Box,
+      tag: 'DEVOPS',
+      x: '82%', y: '50%', rotate: '-3deg', opacity: 0.3, duration: 27, delay: 2
+    },
+    // 16. System Health (Mini Dashboard)
+    {
+      id: 16,
+      layout: 'dashboard',
+      title: 'Global Edge Latency',
+      metric: '11.8ms',
+      metricLabel: 'p99 SLA Target',
+      graphData: [25, 22, 18, 15, 12, 11],
+      x: '86%', y: '18%', rotate: '4deg', opacity: 0.35, duration: 23, delay: 0
+    },
+    // 17. Problem Solving (Tech Card)
+    {
+      id: 17,
+      layout: 'tech',
+      title: 'Data Structures & Alg.',
+      subtitle: 'Dynamic Programming & Graph Theory',
+      icon: Brain,
+      tag: 'PROBLEM SOLVING',
+      x: '2%', y: '30%', rotate: '-5deg', opacity: 0.3, duration: 30, delay: 3
+    },
+    // 18. Rust Systems (Code Snippet)
+    {
+      id: 18,
+      layout: 'code',
+      filename: 'ring_buffer.rs',
+      code: 'pub fn lock_free_push(&self, item: T) {\n  let tail = self.tail.fetch_add(1);\n  self.slots[tail % N].write(item);\n}',
+      tag: 'RUST ENGINE',
+      x: '75%', y: '28%', rotate: '2deg', opacity: 0.4, duration: 25, delay: 1
+    },
+    // 19. Location (Badge)
+    {
+      id: 19,
+      layout: 'timeline',
+      period: 'LOCATION',
+      role: 'San Francisco, CA',
+      company: 'Open for Remote / Hybrid',
+      x: '14%', y: '36%', rotate: '-2deg', opacity: 0.25, duration: 32, delay: 4
+    },
+    // 20. Microservices Architecture (Stat)
+    {
+      id: 20,
+      layout: 'stat',
+      statNumber: '128',
+      statLabel: 'Microservice Shards',
+      subtext: 'Zero downtime rolling deployments',
+      icon: Layers,
+      x: '84%', y: '84%', rotate: '6deg', opacity: 0.35, duration: 28, delay: 2
+    },
+    // 21. Machine Learning (Tech Card)
+    {
+      id: 21,
+      layout: 'tech',
+      title: 'PyTorch & Vector DB',
+      subtitle: 'Embeddings & HNSW Vector Index',
+      icon: Brain,
+      tag: 'MACHINE LEARNING',
+      x: '38%', y: '86%', rotate: '-4deg', opacity: 0.3, duration: 27, delay: 0
+    },
+    // 22. Security & mTLS (Code Snippet)
+    {
+      id: 22,
+      layout: 'code',
+      filename: 'mtls_config.go',
+      code: 'tlsConfig := &tls.Config{\n  ClientAuth: tls.RequireAndVerifyClientCert,\n  MinVersion: tls.VersionTLS13,\n}',
+      tag: 'SECURITY',
+      x: '60%', y: '78%', rotate: '3deg', opacity: 0.35, duration: 31, delay: 3
+    },
+    // 23. Experience: Senior Engineer (Timeline)
+    {
+      id: 23,
+      layout: 'timeline',
+      period: '2021 — 2023',
+      role: 'Senior Systems Engineer',
+      company: 'Veloce Data Platforms',
+      x: '68%', y: '48%', rotate: '-3deg', opacity: 0.3, duration: 24, delay: 1
+    },
+    // 24. Code Coverage (Stat Card)
+    {
+      id: 24,
+      layout: 'stat',
+      statNumber: '99.4%',
+      statLabel: 'Test Suite Coverage',
+      subtext: 'Unit, Integration & E2E Verification',
+      icon: CheckCircle2,
+      x: '16%', y: '74%', rotate: '4deg', opacity: 0.4, duration: 26, delay: 5
+    },
+    // 25. Projects: Apex AI Proxy (Project Preview)
+    {
+      id: 25,
+      layout: 'project',
+      projectName: 'Apex AI Proxy',
+      tagline: 'Semantic Prompt Cache Gateway',
+      status: 'OPEN SOURCE',
+      x: '76%', y: '62%', rotate: '-5deg', opacity: 0.35, duration: 29, delay: 2
+    },
+    // 26. REST API Design (Tech Card)
+    {
+      id: 26,
+      layout: 'tech',
+      title: 'gRPC & REST APIs',
+      subtitle: 'Protobuf Schemas & OpenAPI 3.0',
+      icon: Server,
+      tag: 'API DESIGN',
+      x: '35%', y: '12%', rotate: '2deg', opacity: 0.3, duration: 33, delay: 4
+    },
+    // 27. Frontend Performance (Stat Card)
+    {
+      id: 27,
+      layout: 'stat',
+      statNumber: '100 / 100',
+      statLabel: 'Lighthouse Performance',
+      subtext: 'Zero Layout Shift & Fast Paint',
+      icon: Zap,
+      x: '8%', y: '22%', rotate: '-4deg', opacity: 0.35, duration: 25, delay: 0
+    },
+    // 28. CKA Certification (Cert Card)
+    {
+      id: 28,
+      layout: 'cert',
+      title: 'CKA Certified',
+      subtitle: 'Kubernetes Administrator',
+      badge: 'CERTIFICATION',
+      icon: ShieldCheck,
+      x: '78%', y: '92%', rotate: '5deg', opacity: 0.4, duration: 22, delay: 3
+    },
+    // 29. Git Workflow (Tech Card)
+    {
+      id: 29,
+      layout: 'tech',
+      title: 'Trunk-Based Dev',
+      subtitle: 'Automated CI/CD & Feature Flags',
+      icon: GitBranch,
+      tag: 'DEVOPS',
+      x: '3%', y: '92%', rotate: '-2deg', opacity: 0.3, duration: 30, delay: 1
+    },
+    // 30. Projects: Synapse UI (Project Card)
+    {
+      id: 30,
+      layout: 'project',
+      projectName: 'Synapse UI System',
+      tagline: 'Zero-runtime Component Toolkit',
+      status: 'v2.4 READY',
+      x: '58%', y: '92%', rotate: '2deg', opacity: 0.35, duration: 31, delay: 5
+    }
   ];
+
+  // Render helper for rendering each distinct visual layout
+  const renderCardContent = (card) => {
+    switch (card.layout) {
+      case 'tech': {
+        const Icon = card.icon || Code2;
+        return (
+          <div className="flex items-center gap-3 p-3 px-4 rounded-xl bg-white/[0.02] border border-white/[0.06] backdrop-blur-md shadow-xl shadow-black/50">
+            <div className="w-8 h-8 rounded-lg bg-white/[0.05] border border-white/10 flex items-center justify-center text-white shrink-0">
+              <Icon className="w-4 h-4" />
+            </div>
+            <div className="space-y-0.5 text-left">
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-bold text-white font-sans">{card.title}</span>
+                <span className="text-[9px] font-mono text-neutral-400 bg-white/[0.04] px-1.5 py-0.2 rounded border border-white/10 uppercase">{card.tag}</span>
+              </div>
+              <p className="text-[10px] text-neutral-400 font-sans">{card.subtitle}</p>
+            </div>
+          </div>
+        );
+      }
+
+      case 'code':
+        return (
+          <div className="p-3 px-3.5 rounded-xl bg-[#0c0c12]/80 border border-white/[0.08] backdrop-blur-md text-left shadow-2xl shadow-black/60 space-y-1.5 min-w-[200px]">
+            <div className="flex items-center justify-between text-[10px] font-mono text-neutral-500 pb-1 border-b border-white/5">
+              <span className="flex items-center gap-1.5 text-emerald-400">
+                <Terminal className="w-3 h-3" />
+                <span>{card.filename}</span>
+              </span>
+              <span className="text-[9px] text-neutral-500 uppercase">{card.tag}</span>
+            </div>
+            <pre className="font-mono text-[10px] text-neutral-300 leading-tight overflow-hidden">
+              <code>{card.code}</code>
+            </pre>
+          </div>
+        );
+
+      case 'stat': {
+        const Icon = card.icon || Award;
+        return (
+          <div className="p-3.5 px-4 rounded-2xl bg-white/[0.025] border border-white/[0.07] backdrop-blur-md text-left shadow-xl shadow-black/50 space-y-1 min-w-[170px]">
+            <div className="flex items-center justify-between text-neutral-400">
+              <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-wider">{card.statLabel}</span>
+              <Icon className="w-3.5 h-3.5 text-white/80" />
+            </div>
+            <div className="text-xl font-bold text-white tracking-tight font-sans">{card.statNumber}</div>
+            <p className="text-[10px] text-neutral-400 font-sans">{card.subtext}</p>
+          </div>
+        );
+      }
+
+      case 'dashboard':
+        return (
+          <div className="p-3 px-4 rounded-xl bg-white/[0.02] border border-white/[0.06] backdrop-blur-md text-left shadow-xl shadow-black/50 space-y-2 min-w-[180px]">
+            <div className="flex items-center justify-between text-[10px] font-mono text-neutral-400">
+              <span>{card.title}</span>
+              <Activity className="w-3 h-3 text-emerald-400" />
+            </div>
+            <div className="flex items-baseline gap-2">
+              <span className="text-lg font-bold text-white font-sans">{card.metric}</span>
+              <span className="text-[10px] font-mono text-neutral-400">{card.metricLabel}</span>
+            </div>
+            {/* Sparkline Bar Chart */}
+            <div className="flex items-end gap-1 h-5 pt-1">
+              {card.graphData.map((val, idx) => (
+                <div 
+                  key={idx} 
+                  className="flex-1 bg-white/20 rounded-sm" 
+                  style={{ height: `${val}%` }}
+                />
+              ))}
+            </div>
+          </div>
+        );
+
+      case 'project':
+        return (
+          <div className="p-3.5 px-4 rounded-xl bg-white/[0.03] border border-white/[0.08] backdrop-blur-md text-left shadow-2xl shadow-black/60 space-y-1 min-w-[190px]">
+            <div className="flex items-center justify-between">
+              <span className="text-[9px] font-mono text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20">{card.status}</span>
+              <ArrowUpRight className="w-3.5 h-3.5 text-neutral-400" />
+            </div>
+            <div className="text-xs font-bold text-white font-sans pt-0.5">{card.projectName}</div>
+            <p className="text-[10px] text-neutral-400 font-sans">{card.tagline}</p>
+          </div>
+        );
+
+      case 'graph':
+        return (
+          <div className="p-3 px-4 rounded-xl bg-white/[0.02] border border-white/[0.06] backdrop-blur-md text-left shadow-xl shadow-black/50 space-y-2 min-w-[180px]">
+            <div className="flex items-center justify-between text-[10px] font-mono text-neutral-400">
+              <span>{card.title}</span>
+              <BarChart2 className="w-3.5 h-3.5 text-neutral-400" />
+            </div>
+            <div>
+              <div className="text-sm font-bold text-white font-sans">{card.value}</div>
+              <div className="text-[9px] text-neutral-400 font-mono">{card.subtitle}</div>
+            </div>
+            <div className="flex items-end gap-1 h-4">
+              {card.graphBars.map((b, idx) => (
+                <div 
+                  key={idx} 
+                  className="flex-1 bg-emerald-400/50 rounded-sm"
+                  style={{ height: `${(b / 32) * 100}%` }}
+                />
+              ))}
+            </div>
+          </div>
+        );
+
+      case 'cert': {
+        const Icon = card.icon || Cloud;
+        return (
+          <div className="flex items-center gap-3 p-3 px-4 rounded-xl bg-white/[0.025] border border-white/[0.07] backdrop-blur-md shadow-xl shadow-black/50">
+            <div className="w-8 h-8 rounded-lg bg-white/10 border border-white/20 flex items-center justify-center text-white shrink-0">
+              <Icon className="w-4 h-4 text-emerald-400" />
+            </div>
+            <div className="text-left space-y-0.5">
+              <span className="text-[9px] font-mono text-neutral-400 uppercase tracking-widest block">{card.badge}</span>
+              <div className="text-xs font-bold text-white font-sans leading-none">{card.title}</div>
+              <p className="text-[10px] text-neutral-400 font-sans">{card.subtitle}</p>
+            </div>
+          </div>
+        );
+      }
+
+      case 'timeline':
+        return (
+          <div className="p-3 px-4 rounded-xl bg-white/[0.02] border border-white/[0.06] backdrop-blur-md text-left shadow-xl shadow-black/50 space-y-0.5">
+            <span className="text-[9px] font-mono text-neutral-400 block">{card.period}</span>
+            <div className="text-xs font-bold text-white font-sans">{card.role}</div>
+            <p className="text-[10px] text-neutral-400 font-sans">{card.company}</p>
+          </div>
+        );
+
+      case 'uispec':
+        return (
+          <div className="p-3 px-4 rounded-xl bg-white/[0.02] border border-white/[0.06] backdrop-blur-md text-left shadow-xl shadow-black/50 space-y-1.5">
+            <div className="flex items-center gap-2 text-xs font-semibold text-white">
+              <Layout className="w-3.5 h-3.5 text-neutral-400" />
+              <span>{card.title}</span>
+            </div>
+            <div className="flex gap-1.5">
+              {card.tokens.map((tok, idx) => (
+                <span key={idx} className="text-[9px] font-mono text-neutral-400 bg-white/[0.04] px-1.5 py-0.5 rounded border border-white/10">
+                  {tok}
+                </span>
+              ))}
+            </div>
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
 
   return (
     <section 
@@ -61,49 +497,32 @@ export default function Hero({ onOpenCommandPalette }) {
         {/* Soft Center Backlight */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-white/[0.025] blur-[170px]" />
 
-        {/* Scattered Floating Cards (32 items) */}
-        {floatingCards.map((card) => {
-          const Icon = card.icon;
-
-          // Compute size variations
-          let sizeClasses = 'px-4 py-2.5 rounded-xl border border-white/[0.04] bg-white/[0.015] backdrop-blur-[3px] text-xs font-mono text-neutral-400 shadow-lg shadow-black/40';
-          if (card.size === 'pill') {
-            sizeClasses = 'px-3 py-1.5 rounded-full border border-white/[0.05] bg-white/[0.02] backdrop-blur-[2px] text-[11px] font-mono text-neutral-300 shadow-md shadow-black/30';
-          } else if (card.size === 'code') {
-            sizeClasses = 'px-3.5 py-2 rounded-lg border border-white/[0.06] bg-[#0d0d12]/60 backdrop-blur-[4px] text-[11px] font-mono text-emerald-400/90 shadow-xl shadow-black/50';
-          } else if (card.size === 'metric') {
-            sizeClasses = 'px-4 py-2 rounded-xl border border-white/[0.05] bg-white/[0.025] backdrop-blur-[3px] text-[11px] font-mono text-neutral-200 tracking-wider font-semibold shadow-lg shadow-black/40';
-          } else if (card.size === 'large') {
-            sizeClasses = 'px-5 py-3 rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-[4px] text-xs font-mono text-neutral-200 font-medium shadow-2xl shadow-black/60';
-          }
-
-          return (
-            <motion.div
-              key={card.id}
-              initial={{ x: 0, y: 0 }}
-              animate={{
-                x: [0, (card.id % 2 === 0 ? 20 : -20), 0],
-                y: [0, (card.id % 3 === 0 ? -28 : 28), 0],
-              }}
-              transition={{
-                duration: card.duration,
-                repeat: Infinity,
-                ease: 'easeInOut',
-                delay: card.delay,
-              }}
-              style={{
-                left: card.x,
-                top: card.y,
-                transform: `rotate(${card.rotate})`,
-                opacity: card.opacity,
-              }}
-              className={`absolute hidden md:flex items-center gap-2.5 transition-opacity duration-500 hover:opacity-90 ${sizeClasses}`}
-            >
-              {Icon && <Icon className="w-3.5 h-3.5 text-neutral-500 shrink-0" />}
-              <span className="whitespace-nowrap tracking-tight">{card.text}</span>
-            </motion.div>
-          );
-        })}
+        {/* Scattered Handcrafted Cards (30 items) */}
+        {canvasCards.map((card) => (
+          <motion.div
+            key={card.id}
+            initial={{ x: 0, y: 0 }}
+            animate={{
+              x: [0, (card.id % 2 === 0 ? 18 : -18), 0],
+              y: [0, (card.id % 3 === 0 ? -24 : 24), 0],
+            }}
+            transition={{
+              duration: card.duration,
+              repeat: Infinity,
+              ease: 'easeInOut',
+              delay: card.delay,
+            }}
+            style={{
+              left: card.x,
+              top: card.y,
+              transform: `rotate(${card.rotate})`,
+              opacity: card.opacity,
+            }}
+            className="absolute hidden md:block transition-opacity duration-500 hover:opacity-95"
+          >
+            {renderCardContent(card)}
+          </motion.div>
+        ))}
 
         {/* Subtle Grid Overlay */}
         <div className="absolute inset-0 bg-grid-pattern opacity-20" />
