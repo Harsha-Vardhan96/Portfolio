@@ -13,23 +13,40 @@ export default function Hero({ onOpenCommandPalette }) {
     setTimeout(() => setCopiedEmail(false), 2000);
   };
 
-  // Background floating cards for Layer 1
+  // 32 Distinct, naturally scattered floating cards for Layer 1 (Endless Creative Canvas)
   const floatingCards = [
-    { text: '10M+ RPS Edge Cluster', icon: Cpu, x: '6%', y: '10%', duration: 28, delay: 0 },
-    { text: 'Rust Tokio Async Engine', icon: Terminal, x: '78%', y: '12%', duration: 32, delay: 2 },
-    { text: '99.999% SLA Uptime', icon: ShieldCheck, x: '84%', y: '72%', duration: 24, delay: 1 },
-    { text: '< 15ms p99 Latency', icon: Sparkles, x: '8%', y: '78%', duration: 30, delay: 3 },
-    { text: 'Zero-Copy Ring Buffer', icon: Code2, x: '88%', y: '42%', duration: 27, delay: 4 },
-    { text: 'Distributed Raft Consensus', icon: Database, x: '4%', y: '44%', duration: 25, delay: 2 },
-    { text: 'AVX-512 SIMD Assembly', icon: Cpu, x: '20%', y: '22%', duration: 31, delay: 5 },
-    { text: 'Apache Arrow Columnar Engine', icon: Layers, x: '72%', y: '84%', duration: 29, delay: 1 },
-    { text: 'OpenTelemetry Trace Pipeline', icon: Terminal, x: '32%', y: '8%', duration: 33, delay: 3 },
-    { text: 'gRPC Low-Latency Proxy', icon: Database, x: '64%', y: '25%', duration: 26, delay: 0 },
-    { text: 'eBPF Kernel Packet Filter', icon: ShieldCheck, x: '26%', y: '88%', duration: 34, delay: 4 },
-    { text: 'React 19 & Tailwind v4', icon: Sparkles, x: '50%', y: '90%', duration: 28, delay: 2 },
-    { text: 'San Francisco, CA', icon: Terminal, x: '46%', y: '6%', duration: 30, delay: 1 },
-    { text: 'PostgreSQL Spanner Engine', icon: Database, x: '12%', y: '62%', duration: 27, delay: 5 },
-    { text: 'Wasm Edge Sandbox', icon: Code2, x: '80%', y: '58%', duration: 26, delay: 3 },
+    { id: 1, type: 'badge', text: '10M+ RPS Edge Cluster', icon: Cpu, x: '4%', y: '8%', rotate: '-4deg', size: 'normal', opacity: 0.35, duration: 26, delay: 0 },
+    { id: 2, type: 'code', text: 'fn lock_free_push(&self) -> Ok(())', x: '72%', y: '6%', rotate: '3deg', size: 'code', opacity: 0.4, duration: 30, delay: 1 },
+    { id: 3, type: 'badge', text: '99.999% SLA Uptime', icon: ShieldCheck, x: '85%', y: '68%', rotate: '-2deg', size: 'pill', opacity: 0.3, duration: 22, delay: 2 },
+    { id: 4, type: 'metric', text: 'p99 LATENCY < 12.4ms', x: '5%', y: '82%', rotate: '5deg', size: 'large', opacity: 0.35, duration: 28, delay: 3 },
+    { id: 5, type: 'badge', text: 'Zero-Copy Ring Buffer', icon: Code2, x: '88%', y: '36%', rotate: '-5deg', size: 'normal', opacity: 0.4, duration: 25, delay: 0 },
+    { id: 6, type: 'code', text: 'const SIMD_STRIDE = 64;', x: '3%', y: '48%', rotate: '4deg', size: 'code', opacity: 0.3, duration: 32, delay: 4 },
+    { id: 7, type: 'badge', text: 'AVX-512 SIMD Assembly', icon: Cpu, x: '18%', y: '16%', rotate: '-3deg', size: 'normal', opacity: 0.35, duration: 27, delay: 1 },
+    { id: 8, type: 'badge', text: 'Apache Arrow Flight', icon: Layers, x: '68%', y: '86%', rotate: '2deg', size: 'pill', opacity: 0.3, duration: 29, delay: 2 },
+    { id: 9, type: 'badge', text: 'OpenTelemetry Pipeline', icon: Terminal, x: '28%', y: '6%', rotate: '-6deg', size: 'normal', opacity: 0.35, duration: 31, delay: 3 },
+    { id: 10, type: 'metric', text: 'QUORUM: 5 / 5 NODES', x: '62%', y: '16%', rotate: '4deg', size: 'metric', opacity: 0.4, duration: 24, delay: 0 },
+    { id: 11, type: 'badge', text: 'eBPF Kernel Probe', icon: ShieldCheck, x: '24%', y: '88%', rotate: '-4deg', size: 'pill', opacity: 0.3, duration: 33, delay: 5 },
+    { id: 12, type: 'badge', text: 'React 19 & Tailwind v4', icon: Sparkles, x: '46%', y: '90%', rotate: '3deg', size: 'normal', opacity: 0.35, duration: 28, delay: 2 },
+    { id: 13, type: 'code', text: 'SELECT * FROM telemetry_stream;', x: '48%', y: '4%', rotate: '-2deg', size: 'code', opacity: 0.35, duration: 29, delay: 1 },
+    { id: 14, type: 'badge', text: 'PostgreSQL Spanner', icon: Database, x: '8%', y: '64%', rotate: '6deg', size: 'normal', opacity: 0.4, duration: 26, delay: 4 },
+    { id: 15, type: 'badge', text: 'Wasm Edge Sandbox', icon: Code2, x: '82%', y: '52%', rotate: '-3deg', size: 'pill', opacity: 0.3, duration: 27, delay: 2 },
+    { id: 16, type: 'metric', text: 'MEM: 14.2 MB / NODE', x: '86%', y: '20%', rotate: '5deg', size: 'metric', opacity: 0.35, duration: 23, delay: 0 },
+    { id: 17, type: 'badge', text: 'Raft Consensus Protocol', icon: Database, x: '2%', y: '32%', rotate: '-5deg', size: 'large', opacity: 0.3, duration: 30, delay: 3 },
+    { id: 18, type: 'code', text: 'cacheHitRate: 98.4%', x: '75%', y: '30%', rotate: '2deg', size: 'code', opacity: 0.4, duration: 25, delay: 1 },
+    { id: 19, type: 'badge', text: 'San Francisco, CA', icon: Terminal, x: '14%', y: '38%', rotate: '-2deg', size: 'pill', opacity: 0.25, duration: 32, delay: 4 },
+    { id: 20, type: 'metric', text: 'ZERO GC PAUSES', x: '84%', y: '84%', rotate: '6deg', size: 'metric', opacity: 0.35, duration: 28, delay: 2 },
+    { id: 21, type: 'badge', text: 'Vector Search HNSW', icon: Sparkles, x: '38%', y: '86%', rotate: '-4deg', size: 'normal', opacity: 0.3, duration: 27, delay: 0 },
+    { id: 22, type: 'code', text: 'mTLS 1.3 Strict Auth', x: '60%', y: '78%', rotate: '3deg', size: 'code', opacity: 0.35, duration: 31, delay: 3 },
+    { id: 23, type: 'badge', text: 'Rust Async Tokio', icon: Terminal, x: '68%', y: '48%', rotate: '-3deg', size: 'pill', opacity: 0.3, duration: 24, delay: 1 },
+    { id: 24, type: 'metric', text: 'SHARD COUNT: 128', x: '16%', y: '76%', rotate: '4deg', size: 'metric', opacity: 0.4, duration: 26, delay: 5 },
+    { id: 25, type: 'badge', text: 'gRPC Micro-Proxy', icon: Database, x: '76%', y: '64%', rotate: '-5deg', size: 'normal', opacity: 0.35, duration: 29, delay: 2 },
+    { id: 26, type: 'code', text: 'AST COMPILER: PASSING', x: '35%', y: '14%', rotate: '2deg', size: 'code', opacity: 0.3, duration: 33, delay: 4 },
+    { id: 27, type: 'badge', text: 'Sub-5KB Core Bundle', icon: Sparkles, x: '8%', y: '24%', rotate: '-4deg', size: 'pill', opacity: 0.35, duration: 25, delay: 0 },
+    { id: 28, type: 'metric', text: 'STATUS: OPERATIONAL', x: '78%', y: '92%', rotate: '5deg', size: 'metric', opacity: 0.4, duration: 22, delay: 3 },
+    { id: 29, type: 'badge', text: 'Prometheus Exporters', icon: Terminal, x: '3%', y: '92%', rotate: '-2deg', size: 'normal', opacity: 0.3, duration: 30, delay: 1 },
+    { id: 30, type: 'code', text: 'atomic::Ordering::SeqCst', x: '88%', y: '8%', rotate: '4deg', size: 'code', opacity: 0.35, duration: 27, delay: 2 },
+    { id: 31, type: 'badge', text: 'Kafka Event Streams', icon: Database, x: '66%', y: '6%', rotate: '-3deg', size: 'normal', opacity: 0.3, duration: 28, delay: 4 },
+    { id: 32, type: 'metric', text: 'WCAG 2.1 AAA', x: '58%', y: '92%', rotate: '2deg', size: 'pill', opacity: 0.35, duration: 31, delay: 5 },
   ];
 
   return (
@@ -38,22 +55,35 @@ export default function Hero({ onOpenCommandPalette }) {
       className="relative w-full h-screen min-h-[720px] overflow-hidden bg-[#070709] flex items-center justify-center select-none"
     >
       {/* ==========================================
-          LAYER 1: Infinite Moving Canvas (Background)
+          LAYER 1: Infinite Creative Canvas (Background)
           ========================================== */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-        {/* Deep Ambient Center Backlight */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] rounded-full bg-white/[0.025] blur-[160px]" />
+        {/* Soft Center Backlight */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-white/[0.025] blur-[170px]" />
 
-        {/* Floating Cards Canvas */}
-        {floatingCards.map((card, idx) => {
+        {/* Scattered Floating Cards (32 items) */}
+        {floatingCards.map((card) => {
           const Icon = card.icon;
+
+          // Compute size variations
+          let sizeClasses = 'px-4 py-2.5 rounded-xl border border-white/[0.04] bg-white/[0.015] backdrop-blur-[3px] text-xs font-mono text-neutral-400 shadow-lg shadow-black/40';
+          if (card.size === 'pill') {
+            sizeClasses = 'px-3 py-1.5 rounded-full border border-white/[0.05] bg-white/[0.02] backdrop-blur-[2px] text-[11px] font-mono text-neutral-300 shadow-md shadow-black/30';
+          } else if (card.size === 'code') {
+            sizeClasses = 'px-3.5 py-2 rounded-lg border border-white/[0.06] bg-[#0d0d12]/60 backdrop-blur-[4px] text-[11px] font-mono text-emerald-400/90 shadow-xl shadow-black/50';
+          } else if (card.size === 'metric') {
+            sizeClasses = 'px-4 py-2 rounded-xl border border-white/[0.05] bg-white/[0.025] backdrop-blur-[3px] text-[11px] font-mono text-neutral-200 tracking-wider font-semibold shadow-lg shadow-black/40';
+          } else if (card.size === 'large') {
+            sizeClasses = 'px-5 py-3 rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-[4px] text-xs font-mono text-neutral-200 font-medium shadow-2xl shadow-black/60';
+          }
+
           return (
             <motion.div
-              key={idx}
+              key={card.id}
               initial={{ x: 0, y: 0 }}
               animate={{
-                x: [0, (idx % 2 === 0 ? 25 : -25), 0],
-                y: [0, (idx % 3 === 0 ? -35 : 35), 0],
+                x: [0, (card.id % 2 === 0 ? 20 : -20), 0],
+                y: [0, (card.id % 3 === 0 ? -28 : 28), 0],
               }}
               transition={{
                 duration: card.duration,
@@ -64,10 +94,12 @@ export default function Hero({ onOpenCommandPalette }) {
               style={{
                 left: card.x,
                 top: card.y,
+                transform: `rotate(${card.rotate})`,
+                opacity: card.opacity,
               }}
-              className="absolute hidden lg:flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-white/[0.015] border border-white/[0.04] backdrop-blur-[2px] shadow-lg shadow-black/40 text-neutral-400 text-xs font-mono opacity-30 hover:opacity-75 transition-opacity"
+              className={`absolute hidden md:flex items-center gap-2.5 transition-opacity duration-500 hover:opacity-90 ${sizeClasses}`}
             >
-              <Icon className="w-3.5 h-3.5 text-neutral-500 shrink-0" />
+              {Icon && <Icon className="w-3.5 h-3.5 text-neutral-500 shrink-0" />}
               <span className="whitespace-nowrap tracking-tight">{card.text}</span>
             </motion.div>
           );
