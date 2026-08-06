@@ -82,10 +82,42 @@ export default function Hero({ onOpenCommandPalette }) {
           ========================================== */}
       <div className="relative z-10 w-full max-w-lg px-5 md:px-0">
         <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 15 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-full rounded-[26px] bg-[#0a0a0e]/80 backdrop-blur-2xl md:backdrop-blur-3xl border border-white/[0.08] p-8 sm:p-10 text-center space-y-7 shadow-[0_35px_120px_rgba(0,0,0,0.85),inset_0_1px_1px_rgba(255,255,255,0.12)] subtle-glow overflow-hidden"
+          initial={{ opacity: 0, scale: 0.96 }}
+          animate={{ 
+            opacity: 1, 
+            scale: 1,
+            y: [0, -6, 0],
+            borderColor: [
+              'rgba(255, 255, 255, 0.08)',
+              'rgba(255, 255, 255, 0.16)',
+              'rgba(255, 255, 255, 0.08)',
+            ],
+            boxShadow: [
+              '0 35px 120px rgba(0, 0, 0, 0.85), inset 0 1px 1px rgba(255, 255, 255, 0.12), 0 0 40px rgba(255, 255, 255, 0.02)',
+              '0 40px 130px rgba(0, 0, 0, 0.9), inset 0 1px 1px rgba(255, 255, 255, 0.22), 0 0 65px rgba(255, 255, 255, 0.05)',
+              '0 35px 120px rgba(0, 0, 0, 0.85), inset 0 1px 1px rgba(255, 255, 255, 0.12), 0 0 40px rgba(255, 255, 255, 0.02)',
+            ],
+          }}
+          transition={{
+            y: {
+              duration: 6,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            },
+            borderColor: {
+              duration: 6,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            },
+            boxShadow: {
+              duration: 6,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            },
+            opacity: { duration: 0.9, ease: [0.16, 1, 0.3, 1] },
+            scale: { duration: 0.9, ease: [0.16, 1, 0.3, 1] },
+          }}
+          className="relative w-full rounded-[26px] bg-[#0a0a0e]/80 backdrop-blur-2xl md:backdrop-blur-3xl border p-8 sm:p-10 text-center space-y-7 overflow-hidden select-none"
         >
           {/* Delicate Top Highlight Accent */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent" />
