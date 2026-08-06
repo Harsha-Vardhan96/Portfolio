@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { 
   Mail, 
   FileText, 
@@ -31,11 +31,14 @@ export default function Hero({ onOpenCommandPalette }) {
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [hoveredCardId, setHoveredCardId] = useState(null);
   const emailAddress = 'harsha21.menda@gmail.com';
+  const shouldReduceMotion = useReducedMotion();
 
   // Smooth Apple-style mouse parallax interpolation
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
+    if (shouldReduceMotion) return;
+
     let animationFrameId;
     let targetX = 0;
     let targetY = 0;
@@ -49,7 +52,6 @@ export default function Hero({ onOpenCommandPalette }) {
     };
 
     const updateParallax = () => {
-      // Ultra-smooth lerp (linear interpolation) factor = 0.04 for zero jitter/lag
       currentX += (targetX - currentX) * 0.04;
       currentY += (targetY - currentY) * 0.04;
       setMousePos({ x: currentX, y: currentY });
@@ -63,7 +65,7 @@ export default function Hero({ onOpenCommandPalette }) {
       window.removeEventListener('mousemove', handleMouseMove);
       cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [shouldReduceMotion]);
 
   const copyEmail = () => {
     navigator.clipboard.writeText(emailAddress);
