@@ -5,7 +5,7 @@ import { GithubIcon, LinkedinIcon, TwitterIcon } from './Icons';
 
 export default function Contact() {
   const [copied, setCopied] = useState(false);
-  const email = 'harshavardhan.menda@gmail.com';
+  const email = 'harsha21.menda@gmail.com';
 
   const copyEmail = () => {
     navigator.clipboard.writeText(email);

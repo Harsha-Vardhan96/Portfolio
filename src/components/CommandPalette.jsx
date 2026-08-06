@@ -30,7 +30,7 @@ export default function CommandPalette({ isOpen, onClose }) {
   }, [isOpen, onClose]);
 
   const copyEmail = () => {
-    navigator.clipboard.writeText('harshavardhan.menda@gmail.com');
+    navigator.clipboard.writeText('harsha21.menda@gmail.com');
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -48,7 +48,7 @@ export default function CommandPalette({ isOpen, onClose }) {
     {
       category: 'Actions & Social',
       items: [
-        { title: copied ? 'Email Copied!' : 'Copy Email Address', icon: Mail, action: copyEmail, badge: 'harshavardhan.menda@gmail.com' },
+        { title: copied ? 'Email Copied!' : 'Copy Email Address', icon: Mail, action: copyEmail, badge: 'harsha21.menda@gmail.com' },
         { title: 'GitHub Profile', icon: GithubIcon, action: () => window.open('https://github.com/Harsha-Vardhan96', '_blank') },
         { title: 'LinkedIn Profile', icon: LinkedinIcon, action: () => window.open('https://linkedin.com', '_blank') },
       ]

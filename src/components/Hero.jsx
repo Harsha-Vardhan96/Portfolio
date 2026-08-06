@@ -30,7 +30,7 @@ import { GithubIcon, LinkedinIcon } from './Icons';
 export default function Hero({ onOpenCommandPalette }) {
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [hoveredCardId, setHoveredCardId] = useState(null);
-  const emailAddress = 'harshavardhan.menda@gmail.com';
+  const emailAddress = 'harsha21.menda@gmail.com';
 
   // Smooth Apple-style mouse parallax interpolation
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
