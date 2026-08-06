@@ -437,8 +437,8 @@ export default function Hero({ onOpenCommandPalette }) {
             depthMult = 0.35;
           }
 
-          const parallaxX = mousePos.x * depthMult * 14;
-          const parallaxY = mousePos.y * depthMult * 14;
+          const parallaxX = shouldReduceMotion ? 0 : mousePos.x * depthMult * 14;
+          const parallaxY = shouldReduceMotion ? 0 : mousePos.y * depthMult * 14;
 
           const baseFloatX = card.id % 2 === 0 ? 16 : -16;
           const baseFloatY = card.id % 3 === 0 ? -22 : 22;
@@ -460,8 +460,8 @@ export default function Hero({ onOpenCommandPalette }) {
                       zIndex: 40,
                     }
                   : {
-                      x: [baseFloatX + parallaxX, -baseFloatX + parallaxX, baseFloatX + parallaxX],
-                      y: [baseFloatY + parallaxY, -baseFloatY + parallaxY, baseFloatY + parallaxY],
+                      x: shouldReduceMotion ? baseFloatX : [baseFloatX + parallaxX, -baseFloatX + parallaxX],
+                      y: shouldReduceMotion ? baseFloatY : [baseFloatY + parallaxY, -baseFloatY + parallaxY],
                       scale: layerScale,
                       opacity: layerOpacity,
                       filter: layerBlur,
@@ -472,8 +472,8 @@ export default function Hero({ onOpenCommandPalette }) {
                 isHovered
                   ? { duration: 0.3, ease: 'easeOut' }
                   : {
-                      x: { duration: card.duration, repeat: Infinity, ease: 'easeInOut', delay: card.delay },
-                      y: { duration: card.duration, repeat: Infinity, ease: 'easeInOut', delay: card.delay },
+                      x: { duration: card.duration, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut', delay: card.delay },
+                      y: { duration: card.duration, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut', delay: card.delay },
                       scale: { duration: 0.4 },
                       opacity: { duration: 0.4 },
                       filter: { duration: 0.4 },
@@ -484,7 +484,7 @@ export default function Hero({ onOpenCommandPalette }) {
                 top: card.y,
                 transform: `rotate(${isHovered ? '0deg' : card.rotate})`,
               }}
-              className="absolute hidden md:block cursor-pointer pointer-events-auto"
+              className="absolute hidden md:block cursor-pointer pointer-events-auto gpu-accelerated"
             >
               {renderCardContent(card, isHovered)}
             </motion.div>
@@ -539,7 +539,7 @@ export default function Hero({ onOpenCommandPalette }) {
             scale: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
             opacity: { duration: 0.9, ease: [0.16, 1, 0.3, 1] },
           }}
-          className="relative w-full rounded-[26px] bg-[#0a0a0e]/80 backdrop-blur-2xl md:backdrop-blur-3xl border p-8 sm:p-10 text-center space-y-7 overflow-hidden select-none transition-all duration-300"
+          className="relative w-full rounded-[26px] bg-[#0a0a0e]/80 backdrop-blur-2xl md:backdrop-blur-3xl border p-8 sm:p-10 text-center space-y-7 overflow-hidden select-none transition-all duration-300 gpu-accelerated glass-reflection"
         >
           {/* Delicate Top Highlight Accent */}
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent" />
