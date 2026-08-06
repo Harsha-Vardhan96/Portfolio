@@ -28,7 +28,7 @@ import { GithubIcon, LinkedinIcon, TwitterIcon } from './Icons';
 
 export default function Hero({ onOpenCommandPalette }) {
   const [copiedEmail, setCopiedEmail] = useState(false);
-  const emailAddress = 'alexander.vance.dev@gmail.com';
+  const emailAddress = 'harshavardhan.menda@gmail.com';
 
   const copyEmail = () => {
     navigator.clipboard.writeText(emailAddress);
@@ -576,10 +576,10 @@ export default function Hero({ onOpenCommandPalette }) {
           {/* 1. Name: Large Elegant Serif */}
           <div className="space-y-2 pt-1">
             <h1 
-              className="text-4xl sm:text-5xl md:text-6xl font-normal tracking-tight text-white leading-none"
+              className="text-3xl sm:text-4xl md:text-5xl font-normal tracking-tight text-white leading-tight"
               style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
             >
-              Alexander Vance
+              Harsha Vardhan Menda
             </h1>
 
             {/* 2. Software Developer: Uppercase & Letter Spacing */}
@@ -600,7 +600,7 @@ export default function Hero({ onOpenCommandPalette }) {
               href="#resume"
               onClick={(e) => {
                 e.preventDefault();
-                alert("Downloading Alexander Vance — Software Engineer Resume (PDF)...");
+                alert("Downloading Harsha Vardhan Menda — Software Developer Resume (PDF)...");
               }}
               className="group inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white text-black font-semibold text-xs tracking-wide transition-all duration-300 hover:bg-neutral-200 hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-white/5 cursor-pointer"
             >
@@ -622,7 +622,7 @@ export default function Hero({ onOpenCommandPalette }) {
           <div className="pt-4 border-t border-white/[0.07] flex items-center justify-center gap-5 text-neutral-400">
             {/* GitHub */}
             <a
-              href="https://github.com"
+              href="https://github.com/Harsha-Vardhan96"
               target="_blank"
               rel="noopener noreferrer"
               className="p-2 rounded-full hover:text-white hover:bg-white/[0.06] transition-all duration-300 cursor-pointer"

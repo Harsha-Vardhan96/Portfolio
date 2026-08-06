@@ -32,7 +32,7 @@ export default function Footer() {
         {/* Left Brand */}
         <div className="flex items-center gap-3">
           <span className="w-2 h-2 rounded-full bg-white/40" />
-          <span>© {new Date().getFullYear()} Alexander Vance</span>
+          <span>© {new Date().getFullYear()} Harsha Vardhan Menda</span>
           <span className="text-neutral-700">|</span>
           <span className="text-neutral-400">Handcrafted with React & Tailwind</span>
         </div>

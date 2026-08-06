@@ -5,7 +5,7 @@ import { GithubIcon, LinkedinIcon, TwitterIcon } from './Icons';
 
 export default function Contact() {
   const [copied, setCopied] = useState(false);
-  const email = 'alexander.vance.dev@gmail.com';
+  const email = 'harshavardhan.menda@gmail.com';
 
   const copyEmail = () => {
     navigator.clipboard.writeText(email);
@@ -14,9 +14,9 @@ export default function Contact() {
   };
 
   const socials = [
-    { name: 'GitHub', url: 'https://github.com', icon: GithubIcon, handle: '@alexandervance' },
-    { name: 'LinkedIn', url: 'https://linkedin.com', icon: LinkedinIcon, handle: 'in/alexandervance' },
-    { name: 'X / Twitter', url: 'https://x.com', icon: TwitterIcon, handle: '@vance_code' },
+    { name: 'GitHub', url: 'https://github.com/Harsha-Vardhan96', icon: GithubIcon, handle: '@Harsha-Vardhan96' },
+    { name: 'LinkedIn', url: 'https://linkedin.com', icon: LinkedinIcon, handle: 'in/harsha-vardhan-menda' },
+    { name: 'X / Twitter', url: 'https://x.com', icon: TwitterIcon, handle: '@harsha_menda' },
   ];
 
   return (

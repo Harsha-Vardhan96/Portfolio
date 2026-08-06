@@ -49,9 +49,9 @@ export default function Header({ onOpenCommandPalette }) {
           className="flex items-center gap-2.5 text-xs tracking-wider font-semibold uppercase text-white/90 hover:text-white transition-colors"
         >
           <span className="w-6 h-6 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-[10px] text-white font-mono">
-            AV
+            HV
           </span>
-          <span className="hidden sm:inline font-sans text-sm tracking-tight text-white/80">Alexander Vance</span>
+          <span className="hidden sm:inline font-sans text-sm tracking-tight text-white/80">Harsha Vardhan Menda</span>
         </a>
 
         {/* Desktop Navigation Links */}
