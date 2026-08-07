@@ -9,7 +9,7 @@ export default function Footer() {
       const now = new Date();
       setTimeStr(
         now.toLocaleTimeString('en-US', {
-          timeZone: 'America/Los_Angeles',
+          timeZone: 'Asia/Kolkata',
           hour: '2-digit',
           minute: '2-digit',
           second: '2-digit',
@@ -40,8 +40,8 @@ export default function Footer() {
         {/* Middle Live Time Clock */}
         <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.06] text-[11px] text-neutral-400">
           <Clock className="w-3.5 h-3.5 text-neutral-400" />
-          <span>San Francisco, CA:</span>
-          <span className="text-white font-medium">{timeStr || '12:00 PM PST'}</span>
+          <span>India (IST):</span>
+          <span className="text-white font-medium">{timeStr || '12:00 PM IST'}</span>
         </div>
 
         {/* Back to top */}

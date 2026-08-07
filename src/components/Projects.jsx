@@ -7,118 +7,72 @@ export default function Projects() {
   const [activeFilter, setActiveFilter] = useState('All');
   const [selectedProject, setSelectedProject] = useState(null);
 
-  const filters = ['All', 'Systems & Infra', 'Full Stack', 'AI & DevTools'];
+  const filters = ['All', 'Full Stack', 'Spring Boot & React', 'AI Integration'];
 
   const projects = [
     {
-      id: 'hyperion',
-      title: 'Hyperion Kernel',
-      tagline: 'High-throughput real-time telemetry streaming engine',
-      category: 'Systems & Infra',
-      year: '2026',
-      description: 'Distributed event processing engine designed for sub-10ms state replication across 12 global edge nodes. Features lock-free ring buffers and zero-copy memory allocation.',
+      id: 'smart-tourism',
+      title: 'Smart Tourism & Homestay Recommendation Platform',
+      tagline: 'Connects travelers with homestay hosts and nearby tourist attractions with AI support',
+      category: 'Spring Boot & React',
+      year: '2025 – 2026',
+      description: 'Developing a comprehensive web platform for tourists, hosts, admins, and local guides. Incorporates intelligent AI-assisted travel recommendations, seamless booking workflows, and dynamic destination discovery.',
       highlights: [
-        'Sustained processing speed of 4.2 million events per second per cluster node',
-        'Custom Rust memory allocators eliminating garbage collection pauses',
-        'Built-in Raft consensus protocol optimized for geo-replicated topologies',
-        'Integrated Prometheus metric exporters and real-time trace visualizers'
+        'Developing a tourism platform connecting travelers with homestay hosts and nearby tourist attractions.',
+        'Implemented role-based modules for Admin, Host, Tourist, and Local Guide to manage listings, bookings, and recommendations.',
+        'Integrated an AI chatbot to assist tourists with homestay suggestions, travel queries, and local attraction recommendations.',
+        'Designed responsive UI for searching homestays, booking stays, and exploring nearby tourism places.'
       ],
-      tags: ['Rust', 'gRPC', 'Distributed Consensus', 'eBPF', 'Tokio'],
-      codeSnippet: `// Ring buffer lock-free queue allocation
-pub struct TelemetryBuffer<T, const N: usize> {
-    head: AtomicUsize,
-    tail: AtomicUsize,
-    slots: [UnsafeCell<MaybeUninit<T>>; N],
-}
-impl<T, const N: usize> TelemetryBuffer<T, N> {
-    pub fn push(&self, value: T) -> Result<(), OverflowError> { ... }
-}`,
-      repoName: 'hyperion-core/src/ring_buffer.rs',
-      status: 'PRODUCTION v2.4.0',
-      githubUrl: 'https://github.com',
-      liveUrl: 'https://hyperion-telemetry.io',
-      featured: true,
-      colSpan: 'md:col-span-2'
-    },
-    {
-      id: 'synapse-ui',
-      title: 'Synapse Design System',
-      tagline: 'Precision component toolkit & runtime engine for canvas UI',
-      category: 'Full Stack',
-      year: '2025',
-      description: 'Zero-runtime CSS component framework with GPU-accelerated WebGL canvas primitives, accessible ARIA patterns, and seamless dark-mode tokens.',
-      highlights: [
-        'Sub-5KB core bundle size with zero external dependencies',
-        'Tailwind v4 integration with automated token generation',
-        'Full accessibility compliance (WCAG 2.1 AAA)',
-        'Built-in keyboard layout navigation and focus rings'
-      ],
-      tags: ['TypeScript', 'React 19', 'WebGL', 'Tailwind CSS', 'Framer Motion'],
-      codeSnippet: `export const GlassCard = React.forwardRef<HTMLDivElement, CardProps>(
-  ({ children, blur = "md", ...props }, ref) => (
-    <div ref={ref} className={cn("glass-card backdrop-blur-md border border-white/10", className)} />
-  )
-);`,
-      repoName: 'synapse-ui/packages/core/src/Card.tsx',
-      status: 'OPEN SOURCE',
-      githubUrl: 'https://github.com',
-      liveUrl: 'https://synapse-ui.dev',
-      featured: false,
-      colSpan: 'md:col-span-1'
-    },
-    {
-      id: 'apex-ai',
-      title: 'Apex Inference Proxy',
-      tagline: 'Low-latency LLM routing & context cache layer',
-      category: 'AI & DevTools',
-      year: '2025',
-      description: 'Intelligent AI gateway providing semantically cached prompt embeddings, automatic model fallback failover, and token consumption analytics.',
-      highlights: [
-        'Reduced LLM API overhead expenses by 48% via semantic caching',
-        'Automatic failover routing between Claude 3.5 Sonnet and OpenAI o1',
-        'Streaming SSE response parser with latency profiling',
-        'Built-in rate limiting per tenant key with Redis sliding windows'
-      ],
-      tags: ['Go', 'Redis', 'Vector Search', 'OpenAI API', 'Docker'],
-      codeSnippet: `func (p *Proxy) HandleInference(w http.ResponseWriter, r *http.Request) {
-    ctx := r.Context()
-    cachedResp, hit := p.semanticCache.Get(ctx, req.Embedding)
-    if hit {
-        w.Header().Set("X-Cache-Hit", "true")
-        w.Write(cachedResp)
-        return
+      tags: ['Spring Boot', 'React.js', 'MySQL', 'AI Chatbot', 'REST API', 'Hibernate'],
+      codeSnippet: `// Spring Boot Controller for Homestay Booking & AI Chatbot Routing
+@RestController
+@RequestMapping("/api/v1/homestays")
+public class HomestayController {
+
+    @Autowired
+    private HomestayService homestayService;
+
+    @GetMapping("/recommendations")
+    public ResponseEntity<List<Homestay>> getAIRecommendations(@RequestParam String location, @RequestParam String preferences) {
+        return ResponseEntity.ok(homestayService.findMatches(location, preferences));
     }
 }`,
-      repoName: 'apex-proxy/gateway/router.go',
-      status: 'PRODUCTION',
-      githubUrl: 'https://github.com',
-      liveUrl: 'https://apex-infer.ai',
-      featured: false,
-      colSpan: 'md:col-span-1'
-    },
-    {
-      id: 'nexus-db',
-      title: 'Nexus Dataflow',
-      tagline: 'Declarative SQL pipeline orchestrator for real-time analytics',
-      category: 'Systems & Infra',
-      year: '2024',
-      description: 'Columnar memory pipeline execution framework. Compiles SQL AST transformations directly into optimized SIMD bytecode execution plans.',
-      highlights: [
-        'Vectorized query execution yielding 14x speedup over standard Python ETL',
-        'Built-in Apache Arrow memory format interoperability',
-        'Zero-downtime schema evolution and migration safety checks'
-      ],
-      tags: ['Rust', 'Apache Arrow', 'SQL Parser', 'BigQuery', 'DuckDB'],
-      codeSnippet: `pub fn compile_ast_to_simd(ast: QueryAST) -> Result<ExecutionPlan, CompileError> {
-    let vectorized_nodes = ast.optimize_vector_passes()?;
-    Ok(ExecutionPlan::new(vectorized_nodes))
-}`,
-      repoName: 'nexus-flow/compiler/simd.rs',
-      status: 'MAINTAINED',
-      githubUrl: 'https://github.com',
-      liveUrl: 'https://nexusdata.io',
+      repoName: 'Harsha-Vardhan96/smart-tourism-platform',
+      status: 'LIVE DEMO',
+      githubUrl: 'https://github.com/Harsha-Vardhan96',
+      liveUrl: 'https://github.com/Harsha-Vardhan96',
       featured: true,
       colSpan: 'md:col-span-2'
+    },
+    {
+      id: 'edu-resource-library',
+      title: 'Educational Resource Library',
+      tagline: 'Searchable academic library platform for textbooks, research papers & study guides',
+      category: 'Full Stack',
+      year: '2024 – 2025',
+      description: 'Built a full-stack educational hub enabling students and educators to upload, organize, search, and download academic materials with admin role access controls.',
+      highlights: [
+        'Built a web platform to organize and access educational resources like textbooks, research papers, and study guides.',
+        'Developed a searchable system enabling students and educators to easily find and download materials.',
+        'Implemented admin functionality for uploading resources, organizing materials, and managing user access.',
+        'Designed an intuitive UI to improve resource discovery and learning accessibility.'
+      ],
+      tags: ['Spring Boot', 'React.js', 'MySQL', 'Node.js', 'Material-UI'],
+      codeSnippet: `// Resource Search & Filter Endpoint
+@GetMapping("/resources/search")
+public ResponseEntity<Page<Resource>> searchResources(
+    @RequestParam String query,
+    @RequestParam(required = false) String category,
+    Pageable pageable
+) {
+    return ResponseEntity.ok(resourceService.search(query, category, pageable));
+}`,
+      repoName: 'Harsha-Vardhan96/educational-resource-library',
+      status: 'PROTOTYPE IN PROGRESS',
+      githubUrl: 'https://github.com/Harsha-Vardhan96',
+      liveUrl: 'https://github.com/Harsha-Vardhan96',
+      featured: true,
+      colSpan: 'md:col-span-1'
     }
   ];
 

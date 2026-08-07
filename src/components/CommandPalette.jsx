@@ -30,7 +30,7 @@ export default function CommandPalette({ isOpen, onClose }) {
   }, [isOpen, onClose]);
 
   const copyEmail = () => {
-    navigator.clipboard.writeText('harsha21.menda@gmail.com');
+    navigator.clipboard.writeText('harsha.menda21@gmail.com');
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -40,17 +40,18 @@ export default function CommandPalette({ isOpen, onClose }) {
       category: 'Navigation',
       items: [
         { title: 'Featured Works', icon: FolderGit2, action: () => { window.location.href = '#projects'; onClose(); } },
+        { title: 'Education & Certifications', icon: Terminal, action: () => { window.location.href = '#experience'; onClose(); } },
+        { title: 'Technical Capabilities', icon: Sparkles, action: () => { window.location.href = '#stack'; onClose(); } },
         { title: 'Engineering Principles', icon: Code2, action: () => { window.location.href = '#philosophy'; onClose(); } },
-        { title: 'Experience & History', icon: Terminal, action: () => { window.location.href = '#experience'; onClose(); } },
-        { title: 'Tech Stack Matrix', icon: Sparkles, action: () => { window.location.href = '#stack'; onClose(); } },
       ]
     },
     {
       category: 'Actions & Social',
       items: [
-        { title: copied ? 'Email Copied!' : 'Copy Email Address', icon: Mail, action: copyEmail, badge: 'harsha21.menda@gmail.com' },
-        { title: 'GitHub Profile', icon: GithubIcon, action: () => window.open('https://github.com/Harsha-Vardhan96', '_blank') },
-        { title: 'LinkedIn Profile', icon: LinkedinIcon, action: () => window.open('https://www.linkedin.com/in/harsha-vardhan-menda-60bb37345', '_blank') },
+        { title: 'Download Resume (PDF)', icon: Code2, action: () => { window.open('/Harsha_Vardhan_Menda_Resume.pdf', '_blank'); onClose(); }, badge: 'PDF' },
+        { title: copied ? 'Email Copied!' : 'Copy Email Address', icon: Mail, action: copyEmail, badge: 'harsha.menda21@gmail.com' },
+        { title: 'GitHub Profile', icon: GithubIcon, action: () => window.open('https://github.com/Harsha-Vardhan96/', '_blank') },
+        { title: 'LinkedIn Profile', icon: LinkedinIcon, action: () => window.open('https://www.linkedin.com/in/harsha-vardhan-menda-60bb37345/', '_blank') },
       ]
     }
   ];

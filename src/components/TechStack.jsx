@@ -5,43 +5,43 @@ import { Terminal, Cpu, Layers, Database, Shield, Server, Sparkles, Wrench } fro
 export default function TechStack() {
   const categories = [
     {
-      name: 'Languages & Core Systems',
+      name: 'Programming Languages',
       icon: Terminal,
       skills: [
-        { name: 'Rust', level: 'Expert', detail: 'Systems programming, async Tokio, eBPF, memory safety' },
-        { name: 'TypeScript', level: 'Expert', detail: 'Advanced type gymnastics, monorepos, strict AST transforms' },
-        { name: 'Go (Golang)', level: 'Advanced', detail: 'Microservices, concurrent routines, gRPC proxies' },
-        { name: 'C++20', level: 'Proficient', detail: 'SIMD vectorization, memory-aligned data structures' }
+        { name: 'Java', level: 'Advanced', detail: 'Object-oriented programming, Spring framework core, multi-threading' },
+        { name: 'JavaScript', level: 'Advanced', detail: 'ES6+, async/await, DOM manipulation, React component state' },
+        { name: 'C', level: 'Proficient', detail: 'Low-level memory management, pointers, structures & algorithms' },
+        { name: 'HTML & CSS', level: 'Advanced', detail: 'Responsive design, semantic structure, CSS flexbox/grid layout' }
       ]
     },
     {
-      name: 'Frontend & User Experience',
+      name: 'Web Development & Frameworks',
       icon: Layers,
       skills: [
-        { name: 'React 19 & Next.js', level: 'Expert', detail: 'Server components, concurrent mode, custom hooks' },
-        { name: 'Tailwind CSS v4', level: 'Expert', detail: 'Design tokens, zero-runtime CSS, dark theme engines' },
-        { name: 'Framer Motion', level: 'Advanced', detail: 'Layout animations, gesture physics, micro-interactions' },
-        { name: 'WebGL & Canvas', level: 'Proficient', detail: 'Shader programming, high-FPS canvas charts & graphs' }
+        { name: 'Spring & Spring Boot', level: 'Advanced', detail: 'RESTful API architecture, dependency injection, security, MVC' },
+        { name: 'React.js', level: 'Advanced', detail: 'Hooks, state management, component lifecycles, Material-UI' },
+        { name: 'Node.js', level: 'Proficient', detail: 'Backend JavaScript runtime, Express server API creation' },
+        { name: 'Hibernate ORM', level: 'Proficient', detail: 'Entity mapping, JPA repository management, database persistence' }
       ]
     },
     {
-      name: 'Distributed Data & Infrastructure',
+      name: 'Databases, Cloud & DevOps',
       icon: Database,
       skills: [
-        { name: 'PostgreSQL & Spanner', level: 'Expert', detail: 'Query optimization, connection pooling, sharding' },
-        { name: 'Redis & Memory Stores', level: 'Expert', detail: 'Sliding window rate limiters, pub/sub, spatial indexes' },
-        { name: 'Kafka & RabbitMQ', level: 'Advanced', detail: 'Event-driven streaming, log compaction, partition keys' },
-        { name: 'Kubernetes & Docker', level: 'Advanced', detail: 'Helm charts, custom CRDs, autoscaling, isolation' }
+        { name: 'MySQL & PostgreSQL', level: 'Advanced', detail: 'Relational database design, complex queries, indexing, joins' },
+        { name: 'MongoDB', level: 'Proficient', detail: 'Document-based NoSQL database design & aggregation pipelines' },
+        { name: 'Amazon Web Services (AWS)', level: 'Certified', detail: 'Cloud deployment, EC2, S3 bucket storage & server hosting' },
+        { name: 'Docker', level: 'Proficient', detail: 'Containerization of Spring Boot & React services for deployment' }
       ]
     },
     {
-      name: 'Tooling & Methodology',
+      name: 'Developer Tools & Coursework',
       icon: Wrench,
       skills: [
-        { name: 'Git & CI/CD', level: 'Expert', detail: 'GitHub Actions, automated release tags, trunk-based dev' },
-        { name: 'Prometheus & Grafana', level: 'Expert', detail: 'SLO tracking, alertmanager rules, distributed tracing' },
-        { name: 'OpenTelemetry', level: 'Advanced', detail: 'Span propagation, trace context injection, metrics' },
-        { name: 'Security & Auth', level: 'Advanced', detail: 'OAuth2, OIDC, mTLS, zero-trust network boundaries' }
+        { name: 'VS Code, Eclipse & GitHub', level: 'Expert', detail: 'Git version control, code editing, debugging & team collaboration' },
+        { name: 'Vercel', level: 'Advanced', detail: 'Frontend cloud hosting, continuous deployment & domain configuration' },
+        { name: 'Data Structures & Algorithms', level: 'Core', detail: 'Arrays, Trees, Graphs, Sorting, Dynamic Programming & Analysis' },
+        { name: 'CS Fundamentals', level: 'Core', detail: 'Operating Systems (OS), Database Systems (DBMS), Computer Networks (CN)' }
       ]
     }
   ];

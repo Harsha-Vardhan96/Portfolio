@@ -30,7 +30,7 @@ import { GithubIcon, LinkedinIcon } from './Icons';
 export default function Hero({ onOpenCommandPalette }) {
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [hoveredCardId, setHoveredCardId] = useState(null);
-  const emailAddress = 'harsha21.menda@gmail.com';
+  const emailAddress = 'harsha.menda21@gmail.com';
   const shouldReduceMotion = useReducedMotion();
 
   // Smooth Apple-style mouse parallax interpolation
@@ -560,19 +560,18 @@ export default function Hero({ onOpenCommandPalette }) {
           </div>
 
           {/* 3. Short Introduction: Simple Modern Sans-Serif */}
-          <p className="text-xs sm:text-sm text-neutral-300 font-sans font-normal leading-relaxed max-w-sm mx-auto">
-            Crafting resilient distributed systems, low-latency infrastructure, and high-precision digital products.
+          <p className="text-xs sm:text-sm text-neutral-300 font-sans font-normal leading-relaxed max-w-md mx-auto">
+            B.Tech Computer Science Student (CGPA: 9.5) building full-stack platforms with Spring Boot, React.js, MySQL, AI Chatbots & Cloud Infrastructure.
           </p>
 
           {/* 4. Action Buttons: Rounded, Premium Hover Animations */}
           <div className="flex items-center justify-center gap-3 pt-2">
             {/* Resume Button */}
             <a
-              href="#resume"
-              onClick={(e) => {
-                e.preventDefault();
-                alert("Downloading Harsha Vardhan Menda — Software Developer Resume (PDF)...");
-              }}
+              href="/Harsha_Vardhan_Menda_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              download="Harsha_Vardhan_Menda_Resume.pdf"
               className="group inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-white text-black font-semibold text-xs tracking-wide transition-all duration-300 hover:bg-neutral-200 hover:scale-[1.05] active:scale-[0.98] shadow-lg hover:shadow-white/20 cursor-pointer"
             >
               <FileText className="w-3.5 h-3.5 text-black group-hover:rotate-6 transition-transform" />
