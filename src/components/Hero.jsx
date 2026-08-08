@@ -345,6 +345,71 @@ export default function Hero({ onOpenCommandPalette }) {
   const centerParallaxX = mousePos.x * 1.5;
   const centerParallaxY = mousePos.y * 1.5;
 
+
+  // Filter cards by levels to distribute them into rows
+  const level1Cards = canvasCards.filter(c => c.level === 1);
+  const level2Cards = canvasCards.filter(c => c.level === 2);
+  const level3Cards = canvasCards.filter(c => c.level === 3);
+
+  // Distribute into 5 rows to ensure balanced mixing
+  const row1 = [...level2Cards.slice(0, 3), level1Cards[8], level2Cards[3], level3Cards[0]];
+  const row2 = [...level3Cards.slice(1, 4), level1Cards[7], level3Cards[4], level2Cards[4]];
+  const row3 = [...level1Cards.slice(0, 5), level3Cards[5]];
+  const row4 = [...level3Cards.slice(6, 8), level1Cards.slice(5, 7), level3Cards[2]].flat();
+  const row5 = [...level2Cards.slice(5, 8), level1Cards[8], level2Cards[0], level2Cards[1]].flat();
+
+  const DriftingRow = ({ cards, direction, speed, config }) => {
+    const animationClass = direction === 'left' ? 'animate-[marquee-left_linear_infinite]' : 'animate-[marquee-right_linear_infinite]';
+    return (
+      <div className="relative flex w-[150vw] sm:w-max overflow-visible py-3 sm:py-5">
+        <div 
+          className={`flex items-center gap-8 sm:gap-16 px-4 sm:px-8 w-max ${animationClass} hover:[animation-play-state:paused]`}
+          style={{ animationDuration: `${speed}s` }}
+        >
+          {[...cards, ...cards].map((card, idx) => {
+            if (!card) return null;
+            const isHovered = hoveredCardId === card.id;
+            const isDiscovered = activeDiscoveryId === card.id;
+            
+            let scale = config.idleScale;
+            let opacity = config.idleOpacity;
+            let filter = config.baseFilter;
+            let zIndex = config.zIndex;
+
+            if (isHovered) {
+              scale = config.idleScale * 1.05;
+              opacity = 0.95;
+              filter = 'blur(0px) saturate(1.1)';
+              zIndex = 40;
+            } else if (isDiscovered) {
+              scale = config.idleScale * 1.04;
+              opacity = 0.85;
+              filter = 'blur(0px) saturate(1.05)';
+              zIndex = 30;
+            }
+
+            return (
+              <div
+                key={`${card.id}-${idx}`}
+                onMouseEnter={() => setHoveredCardId(card.id)}
+                onMouseLeave={() => setHoveredCardId(null)}
+                style={{
+                  transform: `scale(${scale})`,
+                  opacity,
+                  filter,
+                  zIndex,
+                  transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)'
+                }}
+                className="relative cursor-pointer pointer-events-auto shrink-0"
+              >
+                {renderCardContent(card, isHovered || isDiscovered)}
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    );
+  };
   return (
     <section 
       id="hero" 
@@ -357,103 +422,30 @@ export default function Hero({ onOpenCommandPalette }) {
         {/* Soft Center Backlight */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-white/[0.025] blur-[170px] pointer-events-none" />
 
-        {/* 26 Floating Cards across 8 Peripheral Zones & 3 Depth Hierarchy Levels */}
-        {canvasCards.map((card) => {
-          const isHovered = hoveredCardId === card.id;
-          const isDiscovered = activeDiscoveryId === card.id;
-
-          let idleOpacity = 0.55;
-          let idleScale = 1.0;
-          let depthMult = 0.5;
-          let baseFilter = 'blur(0px)';
-
-          if (card.level === 1) {
-            // Level 1: Primary Supporting Cards (Clear, Opacity 55-65%, Minimal Blur)
-            idleOpacity = 0.58;
-            idleScale = 1.0;
-            depthMult = 0.6;
-            baseFilter = 'blur(0px)';
-          } else if (card.level === 2) {
-            // Level 2: Background Code / Atmosphere Cards (Opacity 18-28%, Blurred, Lower Saturation)
-            idleOpacity = 0.22;
-            idleScale = 0.92;
-            depthMult = 0.2;
-            baseFilter = 'blur(4px) saturate(0.7)';
-          } else if (card.level === 3) {
-            // Level 3: Personality / Discovery Cards (Idle Opacity 40%, 2px Blur, Discovery Pulse)
-            idleOpacity = 0.40;
-            idleScale = 0.95;
-            depthMult = 0.4;
-            baseFilter = 'blur(2px)';
-          }
-
-          const parallaxX = shouldReduceMotion ? 0 : mousePos.x * depthMult * 10;
-          const parallaxY = shouldReduceMotion ? 0 : mousePos.y * depthMult * 10;
-
-          const baseFloatX = card.id % 2 === 0 ? 12 : -12;
-          const baseFloatY = card.id % 3 === 0 ? -16 : 16;
-
-          let animateState;
-          let transitionState;
-
-          if (isHovered) {
-            animateState = {
-              x: baseFloatX + parallaxX,
-              y: baseFloatY + parallaxY,
-              scale: idleScale * 1.06,
-              opacity: 0.96,
-              filter: 'blur(0px) saturate(1.1)',
-              zIndex: 40,
-            };
-            transitionState = { duration: 0.3, ease: 'easeOut' };
-          } else if (isDiscovered) {
-            animateState = {
-              x: baseFloatX + parallaxX,
-              y: baseFloatY + parallaxY,
-              scale: idleScale * 1.04,
-              opacity: 0.82,
-              filter: 'blur(0px) saturate(1.05)',
-              zIndex: 30,
-            };
-            transitionState = { duration: 1.5, ease: 'easeInOut' };
-          } else {
-            animateState = {
-              x: shouldReduceMotion ? baseFloatX : [baseFloatX + parallaxX, -baseFloatX + parallaxX],
-              y: shouldReduceMotion ? baseFloatY : [baseFloatY + parallaxY, -baseFloatY + parallaxY],
-              scale: idleScale,
-              opacity: idleOpacity,
-              filter: baseFilter,
-              zIndex: card.level === 1 ? 20 : card.level === 3 ? 15 : 10,
-            };
-            transitionState = {
-              x: { duration: card.duration, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut', delay: card.delay },
-              y: { duration: card.duration, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut', delay: card.delay },
-              scale: { duration: 1.2, ease: 'easeInOut' },
-              opacity: { duration: 1.2, ease: 'easeInOut' },
-              filter: { duration: 1.2, ease: 'easeInOut' },
-            };
-          }
-
-          return (
-            <motion.div
-              key={card.id}
-              onMouseEnter={() => setHoveredCardId(card.id)}
-              onMouseLeave={() => setHoveredCardId(null)}
-              initial={{ x: 0, y: 0 }}
-              animate={animateState}
-              transition={transitionState}
-              style={{
-                left: card.x,
-                top: card.y,
-                transform: `rotate(${isHovered ? '0deg' : card.rotate})`,
-              }}
-              className="absolute hidden md:block cursor-pointer pointer-events-auto gpu-accelerated"
-            >
-              {renderCardContent(card, isHovered || isDiscovered)}
-            </motion.div>
-          );
-        })}
-
+        {/* 5 Continuous Drifting Rows of Content */}
+        <div className="absolute inset-0 flex flex-col justify-center items-center overflow-hidden scale-110 -z-10">
+          <DriftingRow 
+            cards={row1} direction="left" speed={60} 
+            config={{ idleOpacity: 0.15, idleScale: 0.9, baseFilter: 'blur(4px) saturate(0.8)', zIndex: 10 }} 
+          />
+          <DriftingRow 
+            cards={row2} direction="right" speed={50} 
+            config={{ idleOpacity: 0.25, idleScale: 0.95, baseFilter: 'blur(2px)', zIndex: 15 }} 
+          />
+          <DriftingRow 
+            cards={row3} direction="left" speed={55} 
+            config={{ idleOpacity: 0.5, idleScale: 1.0, baseFilter: 'blur(0px)', zIndex: 20 }} 
+          />
+          <DriftingRow 
+            cards={row4} direction="right" speed={65} 
+            config={{ idleOpacity: 0.25, idleScale: 0.95, baseFilter: 'blur(2px)', zIndex: 15 }} 
+          />
+          <DriftingRow 
+            cards={row5} direction="left" speed={70} 
+            config={{ idleOpacity: 0.15, idleScale: 0.9, baseFilter: 'blur(4px) saturate(0.8)', zIndex: 10 }} 
+          />
+        </div>
+        
         {/* Subtle Grid Overlay */}
         <div className="absolute inset-0 bg-grid-pattern opacity-20 pointer-events-none" />
       </div>
