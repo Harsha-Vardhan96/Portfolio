@@ -1,4 +1,89 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
+
+function NavItem({ item, isActive }) {
+  const buttonRef = useRef(null);
+  const text1Ref = useRef(null);
+  const text2Ref = useRef(null);
+  const timelineRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Set initial positions for text layers
+      gsap.set(text1Ref.current, { yPercent: 0 });
+      gsap.set(text2Ref.current, { yPercent: 100 });
+
+      timelineRef.current = gsap.timeline({ paused: true });
+
+      timelineRef.current
+        .to(buttonRef.current, {
+          backgroundColor: '#ffffff',
+          borderColor: 'rgba(255, 255, 255, 0.95)',
+          duration: 0.18,
+          ease: 'power2.out',
+        }, 0)
+        .to(text1Ref.current, {
+          yPercent: -100,
+          duration: 0.18,
+          ease: 'power2.out',
+        }, 0)
+        .to(text2Ref.current, {
+          yPercent: 0,
+          duration: 0.18,
+          ease: 'power2.out',
+        }, 0);
+    }, buttonRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  const handleMouseEnter = () => {
+    if (timelineRef.current) {
+      timelineRef.current.timeScale(1).play();
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (timelineRef.current) {
+      timelineRef.current.timeScale(1.35).reverse();
+    }
+  };
+
+  return (
+    <a
+      ref={buttonRef}
+      href={item.href}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className={`relative inline-flex items-center justify-center px-3.5 py-1.5 rounded-full text-xs font-medium overflow-hidden select-none gpu-accelerated transition-colors duration-200 ${
+        isActive
+          ? 'bg-white/10 text-white shadow-sm border border-white/15'
+          : 'bg-transparent text-neutral-400 border border-transparent'
+      }`}
+    >
+      {/* Strictly Clipped Text Container */}
+      <span className="relative inline-block overflow-hidden h-4 leading-none pointer-events-none gpu-accelerated">
+        {/* Layer 1: Normal Text (Light Text) */}
+        <span
+          ref={text1Ref}
+          className={`block text-xs font-medium leading-none ${
+            isActive ? 'text-white' : 'text-neutral-400'
+          }`}
+        >
+          {item.label}
+        </span>
+
+        {/* Layer 2: Duplicate Hover Text (Black Text, Strictly Clipped) */}
+        <span
+          ref={text2Ref}
+          className="absolute inset-0 flex items-center justify-center text-xs font-medium text-black leading-none whitespace-nowrap"
+        >
+          {item.label}
+        </span>
+      </span>
+    </a>
+  );
+}
 
 export default function Header({ onOpenCommandPalette }) {
   const [scrolled, setScrolled] = useState(false);
@@ -54,20 +139,14 @@ export default function Header({ onOpenCommandPalette }) {
           <span className="hidden sm:inline font-sans text-sm tracking-tight text-white/80">Harsha Vardhan Menda</span>
         </a>
 
-        {/* Desktop Navigation Links */}
+        {/* Desktop Navigation Links with GSAP PillNav Hover Animation */}
         <div className="hidden md:flex items-center gap-1 bg-white/[0.03] p-1 rounded-full border border-white/[0.05]">
           {navItems.map((item) => (
-            <a
+            <NavItem
               key={item.id}
-              href={item.href}
-              className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-300 ${
-                activeSection === item.id
-                  ? 'bg-white/10 text-white shadow-sm border border-white/15'
-                  : 'text-neutral-400 hover:text-white hover:bg-white/[0.05]'
-              }`}
-            >
-              {item.label}
-            </a>
+              item={item}
+              isActive={activeSection === item.id}
+            />
           ))}
         </div>
 
