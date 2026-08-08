@@ -547,7 +547,7 @@ export default function Hero({ onOpenCommandPalette }) {
           {/* 1. Name: Large Elegant Serif */}
           <div className="space-y-2 pt-1">
             <h1 
-              className="text-3xl sm:text-4xl md:text-5xl font-normal tracking-tight text-white leading-tight"
+              className="text-3xl sm:text-4xl md:text-5xl font-normal tracking-tight leading-tight animated-name-gradient"
               style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
             >
               Harsha Vardhan Menda
